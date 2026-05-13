@@ -1,0 +1,2170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Relic Roster — Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    /* ============================================================
+       RELIC ROSTER DESIGN SYSTEM — CSS CUSTOM PROPERTIES
+       Copy this block into any project to use the design tokens.
+    ============================================================ */
+    :root {
+      /* Core Colors */
+      --background:          240 7% 4.5%;    /* #0B0B0D — page background */
+      --foreground:          0 0% 100%;       /* #FFFFFF — primary text */
+      --card:                240 6% 8.5%;    /* #141417 — card background */
+      --card-foreground:     0 0% 100%;
+      --popover:             240 6% 8.5%;
+      --popover-foreground:  0 0% 100%;
+
+      /* Brand */
+      --primary:             45 100% 50%;    /* #FFBF00 — gold */
+      --primary-foreground:  0 0% 7%;        /* #121212 — text on gold */
+      --accent:              45 100% 50%;
+      --accent-foreground:   0 0% 7%;
+
+      /* Surfaces */
+      --surface:             240 6% 8.5%;    /* #141417 */
+      --surface-2:           240 5% 11%;     /* #1B1B1D */
+      --secondary:           240 4% 14%;     /* #222225 */
+      --secondary-foreground: 240 5% 74%;   /* #B9B9C0 */
+      --muted:               240 4% 14%;
+      --muted-foreground:    240 5% 74%;
+
+      /* Semantic */
+      --destructive:         0 84.2% 60.2%; /* #EF4444 */
+      --destructive-foreground: 210 40% 98%;
+
+      /* Borders & Inputs */
+      --border:              0 0% 100% / 0.08;  /* white 8% opacity */
+      --input:               0 0% 100% / 0.08;
+      --ring:                45 100% 50%;
+
+      /* Special Gold Effects */
+      --gold:                45 100% 50%;
+      --gold-soft:           45 100% 50% / 0.12;
+      --gold-glow:           0 12px 30px rgba(255, 191, 0, 0.22);
+
+      /* Sidebar (mirrors main palette) */
+      --sidebar-background:  240 6% 8.5%;
+      --sidebar-foreground:  0 0% 100%;
+      --sidebar-primary:     45 100% 50%;
+      --sidebar-border:      0 0% 100% / 0.08;
+
+      /* Shape */
+      --radius:              0.75rem;         /* 12px base border radius */
+
+      /* Typography */
+      --font-sans:           'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+      /* Spacing Scale (4px base unit) */
+      --space-1:  0.25rem;   /*  4px */
+      --space-2:  0.5rem;    /*  8px */
+      --space-3:  0.75rem;   /* 12px */
+      --space-4:  1rem;      /* 16px */
+      --space-5:  1.25rem;   /* 20px */
+      --space-6:  1.5rem;    /* 24px */
+      --space-8:  2rem;      /* 32px */
+      --space-10: 2.5rem;    /* 40px */
+      --space-12: 3rem;      /* 48px */
+      --space-16: 4rem;      /* 64px */
+      --space-20: 5rem;      /* 80px */
+      --space-28: 7rem;      /* 112px */
+
+      /* Container */
+      --container-max: 1180px;
+    }
+
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      background-color: hsl(var(--background));
+      color: hsl(var(--foreground));
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.5;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+    }
+
+    /* ============================================================
+       LAYOUT UTILITIES
+    ============================================================ */
+    .container {
+      width: 100%;
+      max-width: var(--container-max);
+      margin-inline: auto;
+      padding-inline: var(--space-4);
+    }
+
+    .section {
+      padding-block: var(--space-20);
+    }
+
+    .section-sm {
+      padding-block: var(--space-12);
+    }
+
+    /* ============================================================
+       NAV
+    ============================================================ */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background-color: hsl(var(--background) / 0.75);
+      border-bottom: 1px solid hsl(var(--border));
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-weight: 800;
+      font-size: 1rem;
+      color: hsl(var(--foreground));
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-logo-icon {
+      width: 28px;
+      height: 28px;
+      background: hsl(var(--gold));
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: var(--space-6);
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: hsl(var(--muted-foreground));
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: hsl(var(--foreground));
+    }
+
+    /* ============================================================
+       SECTION HEADERS
+    ============================================================ */
+    .overline {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: hsl(var(--gold));
+      margin-bottom: var(--space-4);
+    }
+
+    .section-title {
+      font-size: clamp(1.75rem, 3vw, 2.25rem);
+      font-weight: 800;
+      color: hsl(var(--foreground));
+      margin-bottom: var(--space-3);
+    }
+
+    .section-desc {
+      font-size: 1rem;
+      color: hsl(var(--muted-foreground));
+      line-height: 1.75;
+      max-width: 55ch;
+    }
+
+    .section-header {
+      margin-bottom: var(--space-12);
+    }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding-block: var(--space-20);
+      text-align: center;
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 500px;
+      background: hsl(var(--primary) / 0.05);
+      border-radius: 9999px;
+      filter: blur(120px);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      margin-bottom: var(--space-6);
+      padding: 6px 16px;
+      border-radius: 9999px;
+      background: hsl(var(--gold-soft));
+      border: 1px solid hsl(var(--primary) / 0.2);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: hsl(var(--gold));
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.0;
+      margin-bottom: var(--space-4);
+    }
+
+    .hero-title .gold {
+      color: hsl(var(--gold));
+    }
+
+    .hero-subtitle {
+      font-size: 1.125rem;
+      color: hsl(var(--muted-foreground));
+      line-height: 1.75;
+      max-width: 45ch;
+      margin-inline: auto;
+      margin-bottom: var(--space-8);
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+
+    /* ============================================================
+       BUTTONS
+    ============================================================ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      font-family: var(--font-sans);
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.15s ease, transform 0.15s ease, box-shadow 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn:hover { opacity: 0.9; }
+    .btn:active { transform: scale(0.98); }
+    .btn:focus-visible {
+      outline: 2px solid hsl(var(--ring));
+      outline-offset: 3px;
+    }
+
+    /* Sizes */
+    .btn-sm {
+      font-size: 0.8125rem;
+      padding: 8px 16px;
+      border-radius: var(--radius);
+    }
+
+    .btn-md {
+      font-size: 0.9375rem;
+      padding: 12px 24px;
+      border-radius: var(--radius);
+    }
+
+    .btn-lg {
+      font-size: 1rem;
+      padding: 16px 32px;
+      border-radius: calc(var(--radius) + 2px);
+    }
+
+    /* Variants */
+    .btn-primary {
+      background: hsl(var(--primary));
+      color: hsl(var(--primary-foreground));
+    }
+
+    .btn-primary:hover {
+      box-shadow: var(--gold-glow);
+    }
+
+    .btn-secondary {
+      background: hsl(var(--secondary));
+      color: hsl(var(--foreground));
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: hsl(var(--muted-foreground));
+      border: 1px solid hsl(var(--border));
+    }
+
+    .btn-ghost:hover {
+      color: hsl(var(--foreground));
+      background: hsl(var(--surface-2));
+    }
+
+    .btn-destructive {
+      background: hsl(var(--destructive));
+      color: hsl(var(--destructive-foreground));
+    }
+
+    .btn-outline-gold {
+      background: hsl(var(--gold-soft));
+      color: hsl(var(--gold));
+      border: 1px solid hsl(var(--primary) / 0.3);
+    }
+
+    .btn-outline-gold:hover {
+      background: hsl(var(--primary) / 0.2);
+    }
+
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    /* ============================================================
+       CARDS
+    ============================================================ */
+    .card {
+      background: hsl(var(--card));
+      border: 1px solid hsl(var(--border));
+      border-radius: calc(var(--radius) * 1.333); /* 16px = rounded-2xl */
+      padding: var(--space-8);
+    }
+
+    .card-hover {
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card-hover:hover {
+      border-color: hsl(var(--primary) / 0.2);
+      box-shadow: var(--gold-glow);
+    }
+
+    .card-gradient {
+      background: linear-gradient(to bottom, hsl(var(--surface)), hsl(var(--background)));
+    }
+
+    .card-gold {
+      background: hsl(var(--gold-soft));
+      border-color: hsl(var(--primary) / 0.2);
+    }
+
+    .card-sm {
+      padding: var(--space-6);
+    }
+
+    .card-lg {
+      padding: var(--space-12);
+    }
+
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius);
+      background: hsl(var(--gold-soft));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--space-5);
+      font-size: 20px;
+    }
+
+    .card-title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: hsl(var(--foreground));
+      margin-bottom: var(--space-2);
+    }
+
+    .card-body {
+      font-size: 0.9375rem;
+      color: hsl(var(--muted-foreground));
+      line-height: 1.7;
+    }
+
+    /* ============================================================
+       BADGE / CHIP
+    ============================================================ */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      border-radius: 9999px;
+      padding: 4px 12px;
+    }
+
+    .badge-gold {
+      background: hsl(var(--gold-soft));
+      border: 1px solid hsl(var(--primary) / 0.2);
+      color: hsl(var(--gold));
+    }
+
+    .badge-muted {
+      background: hsl(var(--muted));
+      color: hsl(var(--muted-foreground));
+    }
+
+    .badge-destructive {
+      background: hsl(var(--destructive) / 0.12);
+      border: 1px solid hsl(var(--destructive) / 0.3);
+      color: hsl(var(--destructive));
+    }
+
+    .badge-success {
+      background: hsl(142 72% 29% / 0.15);
+      border: 1px solid hsl(142 72% 29% / 0.3);
+      color: hsl(142 72% 45%);
+    }
+
+    /* ============================================================
+       FORM ELEMENTS
+    ============================================================ */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: hsl(var(--foreground));
+    }
+
+    .label-muted {
+      color: hsl(var(--muted-foreground));
+    }
+
+    .input {
+      width: 100%;
+      background: hsl(var(--background));
+      border: 1px solid hsl(var(--border));
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      font-size: 0.875rem;
+      font-family: var(--font-sans);
+      color: hsl(var(--foreground));
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .input::placeholder {
+      color: hsl(var(--muted-foreground));
+    }
+
+    .input:focus {
+      border-color: hsl(var(--primary));
+      box-shadow: 0 0 0 1px hsl(var(--primary));
+    }
+
+    .input:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .input-error {
+      border-color: hsl(var(--destructive));
+    }
+
+    .input-error:focus {
+      box-shadow: 0 0 0 1px hsl(var(--destructive));
+    }
+
+    .helper-text {
+      font-size: 0.8125rem;
+      color: hsl(var(--muted-foreground));
+    }
+
+    .error-text {
+      font-size: 0.8125rem;
+      color: hsl(var(--destructive));
+    }
+
+    /* ============================================================
+       TYPOGRAPHY SCALE
+    ============================================================ */
+    .type-display {
+      font-size: clamp(3rem, 7vw, 4.5rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.0;
+    }
+
+    .type-h1 {
+      font-size: clamp(2.25rem, 4vw, 3.5rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+    }
+
+    .type-h2 {
+      font-size: clamp(1.75rem, 3vw, 2.25rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+    }
+
+    .type-h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+    }
+
+    .type-h4 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .type-h5 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+    }
+
+    .type-body-lg {
+      font-size: 1.125rem;
+      font-weight: 400;
+      line-height: 1.75;
+    }
+
+    .type-body {
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.75;
+    }
+
+    .type-body-sm {
+      font-size: 0.9375rem;
+      font-weight: 400;
+      line-height: 1.7;
+    }
+
+    .type-small {
+      font-size: 0.875rem;
+      font-weight: 400;
+      line-height: 1.6;
+    }
+
+    .type-caption {
+      font-size: 0.8125rem;
+      font-weight: 400;
+      line-height: 1.5;
+    }
+
+    .type-overline {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+
+    .type-label {
+      font-size: 0.875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .text-gold { color: hsl(var(--gold)); }
+    .text-muted { color: hsl(var(--muted-foreground)); }
+    .text-foreground { color: hsl(var(--foreground)); }
+
+    /* ============================================================
+       GRID DEMO STYLES
+    ============================================================ */
+    .demo-grid {
+      display: grid;
+      gap: 8px;
+    }
+
+    .demo-col {
+      background: hsl(var(--primary) / 0.1);
+      border: 1px solid hsl(var(--primary) / 0.3);
+      border-radius: 6px;
+      padding: 12px 8px;
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: hsl(var(--gold));
+    }
+
+    /* ============================================================
+       COLOR SWATCHES
+    ============================================================ */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: var(--space-4);
+    }
+
+    .swatch {
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid hsl(var(--border));
+    }
+
+    .swatch-color {
+      height: 72px;
+      width: 100%;
+    }
+
+    .swatch-info {
+      background: hsl(var(--surface));
+      padding: var(--space-3);
+    }
+
+    .swatch-name {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: hsl(var(--foreground));
+      margin-bottom: 2px;
+    }
+
+    .swatch-value {
+      font-size: 0.75rem;
+      color: hsl(var(--muted-foreground));
+      font-family: 'SFMono-Regular', Consolas, monospace;
+    }
+
+    /* ============================================================
+       SPACING BLOCKS
+    ============================================================ */
+    .spacing-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      margin-bottom: var(--space-3);
+    }
+
+    .spacing-block {
+      background: hsl(var(--primary) / 0.25);
+      border: 1px solid hsl(var(--primary) / 0.4);
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+
+    .spacing-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .spacing-label {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: hsl(var(--foreground));
+    }
+
+    .spacing-val {
+      font-size: 0.75rem;
+      color: hsl(var(--muted-foreground));
+      font-family: monospace;
+    }
+
+    /* ============================================================
+       RADIUS DEMO
+    ============================================================ */
+    .radius-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-6);
+      align-items: flex-start;
+    }
+
+    .radius-demo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .radius-box {
+      width: 80px;
+      height: 80px;
+      background: hsl(var(--primary) / 0.15);
+      border: 1px solid hsl(var(--primary) / 0.4);
+    }
+
+    /* ============================================================
+       SHADOW DEMOS
+    ============================================================ */
+    .shadow-demo-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-8);
+      align-items: flex-start;
+    }
+
+    .shadow-demo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .shadow-box {
+      width: 100px;
+      height: 80px;
+      background: hsl(var(--surface));
+      border: 1px solid hsl(var(--border));
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ============================================================
+       MOTION / TRANSITION DEMOS
+    ============================================================ */
+    .motion-demo {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-6);
+    }
+
+    .motion-box {
+      width: 80px;
+      height: 80px;
+      background: hsl(var(--surface));
+      border: 1px solid hsl(var(--border));
+      border-radius: var(--radius);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: hsl(var(--muted-foreground));
+      text-align: center;
+    }
+
+    .motion-opacity { transition: opacity 0.15s ease; }
+    .motion-opacity:hover { opacity: 0.6; }
+
+    .motion-colors { transition: border-color 0.2s ease, color 0.2s ease; }
+    .motion-colors:hover { border-color: hsl(var(--primary) / 0.4); color: hsl(var(--gold)); }
+
+    .motion-scale { transition: transform 0.15s ease; }
+    .motion-scale:hover { transform: scale(1.05); }
+
+    .motion-glow { transition: box-shadow 0.2s ease, border-color 0.2s ease; }
+    .motion-glow:hover {
+      box-shadow: var(--gold-glow);
+      border-color: hsl(var(--primary) / 0.3);
+    }
+
+    .motion-all { transition: all 0.2s ease; }
+    .motion-all:hover {
+      border-color: hsl(var(--primary) / 0.3);
+      box-shadow: var(--gold-glow);
+      transform: translateY(-2px);
+      color: hsl(var(--gold));
+    }
+
+    /* ============================================================
+       DO / DON'T PATTERNS
+    ============================================================ */
+    .rule-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6);
+    }
+
+    .rule-do {
+      background: hsl(142 72% 29% / 0.08);
+      border: 1px solid hsl(142 72% 29% / 0.25);
+      border-radius: var(--radius);
+      padding: var(--space-6);
+    }
+
+    .rule-dont {
+      background: hsl(var(--destructive) / 0.06);
+      border: 1px solid hsl(var(--destructive) / 0.2);
+      border-radius: var(--radius);
+      padding: var(--space-6);
+    }
+
+    .rule-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: var(--space-3);
+    }
+
+    .rule-do .rule-label { color: hsl(142 72% 45%); }
+    .rule-dont .rule-label { color: hsl(var(--destructive)); }
+
+    .rule-text {
+      font-size: 0.9375rem;
+      color: hsl(var(--muted-foreground));
+      line-height: 1.65;
+    }
+
+    /* ============================================================
+       CODE BLOCK
+    ============================================================ */
+    .code-block {
+      background: hsl(var(--surface));
+      border: 1px solid hsl(var(--border));
+      border-radius: var(--radius);
+      padding: var(--space-6);
+      overflow-x: auto;
+      position: relative;
+    }
+
+    .code-block pre {
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+      font-size: 0.8125rem;
+      line-height: 1.75;
+      color: hsl(var(--foreground));
+      white-space: pre-wrap;
+    }
+
+    .code-block .token-comment { color: hsl(var(--muted-foreground)); }
+    .code-block .token-property { color: hsl(var(--gold)); }
+    .code-block .token-value { color: hsl(199 89% 65%); }
+    .code-block .token-punctuation { color: hsl(var(--muted-foreground)); }
+
+    .copy-btn {
+      position: absolute;
+      top: var(--space-3);
+      right: var(--space-3);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 6px;
+      background: hsl(var(--secondary));
+      color: hsl(var(--muted-foreground));
+      border: 1px solid hsl(var(--border));
+      cursor: pointer;
+      transition: color 0.15s ease, background 0.15s ease;
+    }
+
+    .copy-btn:hover {
+      color: hsl(var(--foreground));
+      background: hsl(var(--muted));
+    }
+
+    /* ============================================================
+       NAV DEMO
+    ============================================================ */
+    .nav-demo {
+      background: hsl(var(--background) / 0.75);
+      backdrop-filter: blur(20px);
+      border: 1px solid hsl(var(--border));
+      border-radius: var(--radius);
+      padding: 0 var(--space-6);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .nav-demo-links {
+      display: flex;
+      gap: var(--space-6);
+      list-style: none;
+    }
+
+    .nav-demo-links a {
+      font-size: 0.875rem;
+      color: hsl(var(--muted-foreground));
+      text-decoration: none;
+      transition: color 0.2s;
+      font-weight: 500;
+    }
+
+    .nav-demo-links a:hover, .nav-demo-links a.active {
+      color: hsl(var(--foreground));
+    }
+
+    .nav-demo-logo {
+      font-weight: 800;
+      font-size: 0.9375rem;
+      letter-spacing: -0.02em;
+      color: hsl(var(--foreground));
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ============================================================
+       DIVIDER
+    ============================================================ */
+    .divider {
+      height: 1px;
+      background: hsl(var(--border));
+      margin-block: var(--space-4);
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    .footer {
+      border-top: 1px solid hsl(var(--border));
+      padding-block: var(--space-10);
+      text-align: center;
+    }
+
+    .footer p {
+      font-size: 0.875rem;
+      color: hsl(var(--muted-foreground));
+    }
+
+    .footer a {
+      color: hsl(var(--gold));
+      text-decoration: none;
+    }
+
+    .footer a:hover { text-decoration: underline; }
+
+    /* ============================================================
+       DARK/LIGHT TOGGLE
+    ============================================================ */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
+    }
+
+    .toggle-btn {
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid hsl(var(--border));
+      background: transparent;
+      color: hsl(var(--muted-foreground));
+      font-family: var(--font-sans);
+      transition: all 0.15s ease;
+    }
+
+    .toggle-btn.active, .toggle-btn:hover {
+      background: hsl(var(--secondary));
+      color: hsl(var(--foreground));
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .rule-grid { grid-template-columns: 1fr; }
+      .color-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+    }
+
+    /* ============================================================
+       GRID LAYOUT HELPERS
+    ============================================================ */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-6); }
+
+    @media (max-width: 900px) {
+      .grid-3 { grid-template-columns: repeat(2, 1fr); }
+      .grid-4 { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 600px) {
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    }
+
+    /* ============================================================
+       SCROLLSPY ACTIVE STATES
+    ============================================================ */
+    .toc {
+      position: sticky;
+      top: 96px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+
+    .toc a {
+      font-size: 0.8125rem;
+      color: hsl(var(--muted-foreground));
+      text-decoration: none;
+      padding: 6px 10px;
+      border-radius: 6px;
+      border-left: 2px solid transparent;
+      transition: all 0.15s ease;
+    }
+
+    .toc a:hover {
+      color: hsl(var(--foreground));
+      background: hsl(var(--surface-2));
+    }
+
+    .toc a.active {
+      color: hsl(var(--gold));
+      border-left-color: hsl(var(--gold));
+      background: hsl(var(--gold-soft));
+    }
+
+    /* Page layout with TOC sidebar */
+    .page-layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: var(--space-12);
+      align-items: start;
+    }
+
+    .toc-sidebar {
+      display: block;
+    }
+
+    @media (max-width: 1100px) {
+      .page-layout { grid-template-columns: 1fr; }
+      .toc-sidebar { display: none; }
+    }
+
+    /* ============================================================
+       MISC HELPERS
+    ============================================================ */
+    .flex { display: flex; }
+    .flex-wrap { flex-wrap: wrap; }
+    .items-center { align-items: center; }
+    .justify-center { justify-content: center; }
+    .justify-between { justify-content: space-between; }
+    .gap-2 { gap: var(--space-2); }
+    .gap-3 { gap: var(--space-3); }
+    .gap-4 { gap: var(--space-4); }
+    .gap-6 { gap: var(--space-6); }
+    .gap-8 { gap: var(--space-8); }
+    .mb-2 { margin-bottom: var(--space-2); }
+    .mb-3 { margin-bottom: var(--space-3); }
+    .mb-4 { margin-bottom: var(--space-4); }
+    .mb-6 { margin-bottom: var(--space-6); }
+    .mb-8 { margin-bottom: var(--space-8); }
+    .mb-12 { margin-bottom: var(--space-12); }
+    .mt-2 { margin-top: var(--space-2); }
+    .mt-4 { margin-top: var(--space-4); }
+    .text-center { text-align: center; }
+
+    .surface-chip {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      font-family: monospace;
+      background: hsl(var(--surface-2));
+      color: hsl(var(--muted-foreground));
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="#" class="nav-logo">
+        <span class="nav-logo-icon">🏆</span>
+        Relic Roster <span style="color:hsl(var(--muted-foreground));font-weight:400;margin-left:4px;">Design System</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#colors">Colors</a></li>
+        <li><a href="#typography">Type</a></li>
+        <li><a href="#spacing">Spacing</a></li>
+        <li><a href="#components">Components</a></li>
+        <li><a href="#layout">Layout</a></li>
+        <li><a href="#motion">Motion</a></li>
+        <li><a href="#tokens">Tokens</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="container" style="position:relative;z-index:1;">
+      <span class="hero-badge">v1.0 — May 2025</span>
+      <h1 class="hero-title">
+        Relic Roster<br><span class="gold">Design System</span>
+      </h1>
+      <p class="hero-subtitle">
+        A complete reference for the visual language powering relicroster.com — tokens, components, patterns, and usage rules.
+      </p>
+      <div class="hero-actions">
+        <a href="#tokens" class="btn btn-primary btn-md">Copy CSS Tokens</a>
+        <a href="#components" class="btn btn-ghost btn-md">Browse Components</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT -->
+  <div class="container" style="padding-bottom: 80px;">
+    <div class="page-layout">
+
+      <!-- TOC SIDEBAR -->
+      <aside class="toc-sidebar">
+        <nav class="toc" id="toc">
+          <a href="#colors" class="active">Colors</a>
+          <a href="#typography">Typography</a>
+          <a href="#spacing">Spacing</a>
+          <a href="#radius">Border Radius</a>
+          <a href="#shadows">Shadows</a>
+          <a href="#components">Components</a>
+          <a href="#buttons">— Buttons</a>
+          <a href="#cards">— Cards</a>
+          <a href="#badges">— Badges</a>
+          <a href="#forms">— Forms</a>
+          <a href="#navigation">— Navigation</a>
+          <a href="#layout">Layout</a>
+          <a href="#motion">Motion</a>
+          <a href="#rules">Do / Don't</a>
+          <a href="#tokens">CSS Tokens</a>
+        </nav>
+      </aside>
+
+      <!-- MAIN -->
+      <main>
+
+        <!-- ═══════════ COLORS ═══════════ -->
+        <section class="section-sm" id="colors">
+          <div class="section-header">
+            <span class="overline">Design Tokens</span>
+            <h2 class="section-title">Color Palette</h2>
+            <p class="section-desc">A dark-first palette anchored in near-black backgrounds and a signature gold accent. Borders use white at 8% opacity to maintain subtlety on dark surfaces.</p>
+          </div>
+
+          <h3 class="type-h5 text-foreground mb-4" style="margin-top:var(--space-8)">Core Colors</h3>
+          <div class="color-grid mb-8">
+            <div class="swatch">
+              <div class="swatch-color" style="background:#0B0B0D"></div>
+              <div class="swatch-info">
+                <div class="swatch-name">Background</div>
+                <div class="swatch-value">#0B0B0D</div>
+                <div class="swatch-value">hsl(240 7% 4.5%)</div>
+                <div class="swatch-value">--background</div>
+              </div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-color" style="background:#141417"></div>
+              <div class="swatch-info">
+                <div class="swatch-name">Surface / Card</div>
+                <div class="swatch-value">#141417</div>
+                <div class="swatch-value">hsl(240 6% 8.5%)</div>
+                <div class="swatch-value">--card / --surface</div>
+              </div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-color" style="background:#1B1B1D"></div>
+              <div class="swatch-info">
+                <div class="swatch-name">Surface 2</div>
+                <div class="swatch-value">#1B1B1D</div>
+                <div class="swatch-value">hsl(240 5% 11%)</div>
+                <div class="swatch-value">--surface-2</div>
+              </div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-color" style="background:#222225"></div>
+              <div class="swatch-info">
+                <div class="swatch-name">Secondary / Muted</div>
+                <div class="swatch-value">#222225</div>
+                <div class="swatch-value">hsl(240 4% 14%)</div>
+                <div class="swatch-value">--secondary / --muted</div>
+              </div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-color" style="background:#FFFFFF"></div>
+              <div class="swatch-info">
+                <div class="swatch-name">Foreground</div>
+                <div class="swatch-value">#FFFFFF</div>
+                <div class="swatch-value">hsl(0 0% 100%)</div>
+                <div class="swatch-value">--foreground</div>
+              </div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-color" style="background:#B9B9C0"></div>
+              <div class="swatch-info">
+                <div class="swatch-name">Muted Foreground</div>
+                <div class="swatch-value">#B9B9C0</div>
+                <div class="swatch-value">hsl(240 5% 74%)</div>
+                <div class="swatch-value">--muted-foreground</div>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="type-h5 text-foreground mb-4">Brand & Accent</h3>
+          <div class="color-grid mb-8">
+            <div class="swatch">
+              <div class="swatch-color" style="background:#FFBF00"></div>
+              <div class="swatch-info">
+                <div class="swatch-name">Gold (Primary)</div>
+                <div class="swatch-value">#FFBF00</div>
+                <div class="swatch-value">hsl(45 100% 50%)</div>
+                <div class="swatch-value">--primary / --gold</div>
+              </div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-color" style="background:rgba(255,191,0,0.12); border: 1px solid rgba(255,191,0,0.3)"></div>
+              <div class="swatch-info">
+                <div class="swatch-name">Gold Soft</div>
+                <div class="swatch-value">rgba(255,191,0,0.12)</div>
+                <div class="swatch-value">hsl(45 100% 50% / 0.12)</div>
+                <div class="swatch-value">--gold-soft</div>
+              </div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-color" style="background:#121212"></div>
+              <div class="swatch-info">
+                <div class="swatch-name">Primary Foreground</div>
+                <div class="swatch-value">#121212</div>
+                <div class="swatch-value">hsl(0 0% 7%)</div>
+                <div class="swatch-value">--primary-foreground</div>
+              </div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-color" style="background:rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15)"></div>
+              <div class="swatch-info">
+                <div class="swatch-name">Border / Input</div>
+                <div class="swatch-value">rgba(255,255,255,0.08)</div>
+                <div class="swatch-value">white at 8% opacity</div>
+                <div class="swatch-value">--border / --input</div>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="type-h5 text-foreground mb-4">Semantic Colors</h3>
+          <div class="color-grid">
+            <div class="swatch">
+              <div class="swatch-color" style="background:#EF4444"></div>
+              <div class="swatch-info">
+                <div class="swatch-name">Destructive</div>
+                <div class="swatch-value">#EF4444</div>
+                <div class="swatch-value">hsl(0 84.2% 60.2%)</div>
+                <div class="swatch-value">--destructive</div>
+              </div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-color" style="background:hsl(142 72% 29%)"></div>
+              <div class="swatch-info">
+                <div class="swatch-name">Success</div>
+                <div class="swatch-value">#1a7d38</div>
+                <div class="swatch-value">hsl(142 72% 29%)</div>
+                <div class="swatch-value">(contextual)</div>
+              </div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-color" style="background:hsl(199 89% 45%)"></div>
+              <div class="swatch-info">
+                <div class="swatch-name">Info</div>
+                <div class="swatch-value">#0ea5d9</div>
+                <div class="swatch-value">hsl(199 89% 45%)</div>
+                <div class="swatch-value">(contextual)</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- ═══════════ TYPOGRAPHY ═══════════ -->
+        <section class="section-sm" id="typography">
+          <div class="section-header">
+            <span class="overline">Design Tokens</span>
+            <h2 class="section-title">Typography Scale</h2>
+            <p class="section-desc">Inter is the sole typeface, spanning weights 400–900. All headings use tight letter-spacing (-0.03em) and a compressed line-height of 1.05.</p>
+          </div>
+
+          <div class="card mb-6" style="overflow:hidden;">
+            <div class="mb-6" style="padding-bottom:var(--space-6);border-bottom:1px solid hsl(var(--border));">
+              <div class="flex items-center justify-between mb-2">
+                <span class="type-caption text-muted">Display — 72px / weight 900</span>
+                <span class="surface-chip">font-black</span>
+              </div>
+              <div class="type-display" style="color:hsl(var(--foreground));font-size:clamp(2rem,6vw,4.5rem);">The <span style="color:hsl(var(--gold))">Collection</span></div>
+            </div>
+
+            <div class="mb-6" style="padding-bottom:var(--space-6);border-bottom:1px solid hsl(var(--border));">
+              <div class="flex items-center justify-between mb-2">
+                <span class="type-caption text-muted">H1 — 56px / weight 800</span>
+                <span class="surface-chip">font-extrabold</span>
+              </div>
+              <h1 class="type-h1">Premium Memorabilia Management</h1>
+            </div>
+
+            <div class="mb-6" style="padding-bottom:var(--space-6);border-bottom:1px solid hsl(var(--border));">
+              <div class="flex items-center justify-between mb-2">
+                <span class="type-caption text-muted">H2 — 36px / weight 800</span>
+                <span class="surface-chip">font-extrabold</span>
+              </div>
+              <h2 class="type-h2">Everything You Need</h2>
+            </div>
+
+            <div class="mb-6" style="padding-bottom:var(--space-6);border-bottom:1px solid hsl(var(--border));">
+              <div class="flex items-center justify-between mb-2">
+                <span class="type-caption text-muted">H3 — 24px / weight 700</span>
+                <span class="surface-chip">font-bold</span>
+              </div>
+              <h3 class="type-h3">Collection Dashboard</h3>
+            </div>
+
+            <div class="mb-6" style="padding-bottom:var(--space-6);border-bottom:1px solid hsl(var(--border));">
+              <div class="flex items-center justify-between mb-2">
+                <span class="type-caption text-muted">H4 — 20px / weight 700</span>
+                <span class="surface-chip">font-bold</span>
+              </div>
+              <h4 class="type-h4">Smart Categories</h4>
+            </div>
+
+            <div class="mb-6" style="padding-bottom:var(--space-6);border-bottom:1px solid hsl(var(--border));">
+              <div class="flex items-center justify-between mb-2">
+                <span class="type-caption text-muted">H5 — 18px / weight 700</span>
+                <span class="surface-chip">font-bold</span>
+              </div>
+              <h5 class="type-h5">Value Tracking</h5>
+            </div>
+
+            <div class="mb-6" style="padding-bottom:var(--space-6);border-bottom:1px solid hsl(var(--border));">
+              <div class="flex items-center justify-between mb-2">
+                <span class="type-caption text-muted">Body Large — 18px / leading-relaxed</span>
+                <span class="surface-chip">font-normal</span>
+              </div>
+              <p class="type-body-lg text-muted">Catalogue your collection, track value, and showcase your sports memorabilia in one premium platform built for collectors.</p>
+            </div>
+
+            <div class="mb-6" style="padding-bottom:var(--space-6);border-bottom:1px solid hsl(var(--border));">
+              <div class="flex items-center justify-between mb-2">
+                <span class="type-caption text-muted">Body — 16px / leading-relaxed</span>
+                <span class="surface-chip">font-normal</span>
+              </div>
+              <p class="type-body text-muted">Auto-categorize into smart collections by sport, type, condition, and value. Every item documented with provenance tracking and condition reports.</p>
+            </div>
+
+            <div class="mb-6" style="padding-bottom:var(--space-6);border-bottom:1px solid hsl(var(--border));">
+              <div class="flex items-center justify-between mb-2">
+                <span class="type-caption text-muted">Small — 14px</span>
+                <span class="surface-chip">text-sm</span>
+              </div>
+              <p class="type-small text-muted">Check the market prices of your collection in real-time.</p>
+            </div>
+
+            <div class="mb-6" style="padding-bottom:var(--space-6);border-bottom:1px solid hsl(var(--border));">
+              <div class="flex items-center justify-between mb-2">
+                <span class="type-caption text-muted">Caption — 13px</span>
+                <span class="surface-chip">text-xs</span>
+              </div>
+              <p class="type-caption text-muted">Last updated: May 2025</p>
+            </div>
+
+            <div class="mb-4" style="padding-bottom:var(--space-4);border-bottom:1px solid hsl(var(--border));">
+              <div class="flex items-center justify-between mb-2">
+                <span class="type-caption text-muted">Overline — 12px / tracking-widest</span>
+                <span class="surface-chip">uppercase + tracking</span>
+              </div>
+              <span class="overline">Section Label</span>
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="type-caption text-muted">Label — 14px / bold / uppercase</span>
+                <span class="surface-chip">font-bold tracking-wide</span>
+              </div>
+              <span class="type-label text-gold">Features</span>
+            </div>
+          </div>
+
+          <h3 class="type-h5 text-foreground mb-4 mt-8">Font Weights</h3>
+          <div class="card">
+            <div class="grid-3">
+              <div>
+                <div style="font-weight:400;font-size:1.5rem;color:hsl(var(--foreground));margin-bottom:4px;">Regular</div>
+                <span class="surface-chip">400</span>
+              </div>
+              <div>
+                <div style="font-weight:500;font-size:1.5rem;color:hsl(var(--foreground));margin-bottom:4px;">Medium</div>
+                <span class="surface-chip">500</span>
+              </div>
+              <div>
+                <div style="font-weight:600;font-size:1.5rem;color:hsl(var(--foreground));margin-bottom:4px;">Semibold</div>
+                <span class="surface-chip">600</span>
+              </div>
+              <div>
+                <div style="font-weight:700;font-size:1.5rem;color:hsl(var(--foreground));margin-bottom:4px;">Bold</div>
+                <span class="surface-chip">700</span>
+              </div>
+              <div>
+                <div style="font-weight:800;font-size:1.5rem;color:hsl(var(--foreground));margin-bottom:4px;">Extrabold</div>
+                <span class="surface-chip">800</span>
+              </div>
+              <div>
+                <div style="font-weight:900;font-size:1.5rem;color:hsl(var(--foreground));margin-bottom:4px;">Black</div>
+                <span class="surface-chip">900</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- ═══════════ SPACING ═══════════ -->
+        <section class="section-sm" id="spacing">
+          <div class="section-header">
+            <span class="overline">Design Tokens</span>
+            <h2 class="section-title">Spacing Scale</h2>
+            <p class="section-desc">4px base unit. Section rhythm uses 80px (py-20) on mobile and 112px (py-28) on desktop. Cards use 32px (p-8) padding.</p>
+          </div>
+
+          <div class="card">
+            <div class="spacing-row">
+              <div class="spacing-block" style="width:4px;height:24px;"></div>
+              <div class="spacing-meta">
+                <span class="spacing-label">space-1</span>
+                <span class="spacing-val">0.25rem — 4px</span>
+              </div>
+            </div>
+            <div class="spacing-row">
+              <div class="spacing-block" style="width:8px;height:24px;"></div>
+              <div class="spacing-meta">
+                <span class="spacing-label">space-2</span>
+                <span class="spacing-val">0.5rem — 8px</span>
+              </div>
+            </div>
+            <div class="spacing-row">
+              <div class="spacing-block" style="width:12px;height:24px;"></div>
+              <div class="spacing-meta">
+                <span class="spacing-label">space-3</span>
+                <span class="spacing-val">0.75rem — 12px</span>
+              </div>
+            </div>
+            <div class="spacing-row">
+              <div class="spacing-block" style="width:16px;height:24px;"></div>
+              <div class="spacing-meta">
+                <span class="spacing-label">space-4</span>
+                <span class="spacing-val">1rem — 16px — Container horizontal padding</span>
+              </div>
+            </div>
+            <div class="spacing-row">
+              <div class="spacing-block" style="width:20px;height:24px;"></div>
+              <div class="spacing-meta">
+                <span class="spacing-label">space-5</span>
+                <span class="spacing-val">1.25rem — 20px</span>
+              </div>
+            </div>
+            <div class="spacing-row">
+              <div class="spacing-block" style="width:24px;height:24px;"></div>
+              <div class="spacing-meta">
+                <span class="spacing-label">space-6</span>
+                <span class="spacing-val">1.5rem — 24px — Button padding / nav gaps</span>
+              </div>
+            </div>
+            <div class="spacing-row">
+              <div class="spacing-block" style="width:32px;height:24px;"></div>
+              <div class="spacing-meta">
+                <span class="spacing-label">space-8</span>
+                <span class="spacing-val">2rem — 32px — Card padding (p-8)</span>
+              </div>
+            </div>
+            <div class="spacing-row">
+              <div class="spacing-block" style="width:48px;height:24px;"></div>
+              <div class="spacing-meta">
+                <span class="spacing-label">space-12</span>
+                <span class="spacing-val">3rem — 48px — Section header margin</span>
+              </div>
+            </div>
+            <div class="spacing-row">
+              <div class="spacing-block" style="width:80px;height:24px;"></div>
+              <div class="spacing-meta">
+                <span class="spacing-label">space-20</span>
+                <span class="spacing-val">5rem — 80px — Section vertical padding (mobile)</span>
+              </div>
+            </div>
+            <div class="spacing-row">
+              <div class="spacing-block" style="width:112px;height:24px;"></div>
+              <div class="spacing-meta">
+                <span class="spacing-label">space-28</span>
+                <span class="spacing-val">7rem — 112px — Section vertical padding (desktop)</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- ═══════════ BORDER RADIUS ═══════════ -->
+        <section class="section-sm" id="radius">
+          <div class="section-header">
+            <span class="overline">Design Tokens</span>
+            <h2 class="section-title">Border Radius</h2>
+            <p class="section-desc">The base radius is 12px (0.75rem). Buttons and inputs use it directly. Cards use 16px (rounded-2xl). Badges and decorative blobs use full pill radius.</p>
+          </div>
+
+          <div class="card">
+            <div class="radius-grid">
+              <div class="radius-demo">
+                <div class="radius-box" style="border-radius:4px;"></div>
+                <span class="spacing-label">rounded-sm</span>
+                <span class="spacing-val">4px</span>
+              </div>
+              <div class="radius-demo">
+                <div class="radius-box" style="border-radius:8px;"></div>
+                <span class="spacing-label">rounded-lg</span>
+                <span class="spacing-val">8px</span>
+              </div>
+              <div class="radius-demo">
+                <div class="radius-box" style="border-radius:12px;"></div>
+                <span class="spacing-label">rounded-xl</span>
+                <span class="spacing-val">12px — buttons, inputs, chips</span>
+              </div>
+              <div class="radius-demo">
+                <div class="radius-box" style="border-radius:16px;"></div>
+                <span class="spacing-label">rounded-2xl</span>
+                <span class="spacing-val">16px — cards, panels</span>
+              </div>
+              <div class="radius-demo">
+                <div class="radius-box" style="border-radius:24px;"></div>
+                <span class="spacing-label">rounded-3xl</span>
+                <span class="spacing-val">24px — modals</span>
+              </div>
+              <div class="radius-demo">
+                <div class="radius-box" style="border-radius:9999px;"></div>
+                <span class="spacing-label">rounded-full</span>
+                <span class="spacing-val">9999px — badges, blobs</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- ═══════════ SHADOWS ═══════════ -->
+        <section class="section-sm" id="shadows">
+          <div class="section-header">
+            <span class="overline">Design Tokens</span>
+            <h2 class="section-title">Shadows & Glow</h2>
+            <p class="section-desc">The gold glow is the signature visual effect — used on hover states and feature highlights. shadow-card uses the card color for depth without strong contrast.</p>
+          </div>
+
+          <div class="card">
+            <div class="shadow-demo-row">
+              <div class="shadow-demo">
+                <div class="shadow-box" style="box-shadow:0 1px 2px 0 rgba(0,0,0,0.2);">
+                  <span class="type-caption text-muted">sm</span>
+                </div>
+                <span class="spacing-label">shadow-sm</span>
+                <span class="spacing-val">0 1px 2px</span>
+              </div>
+              <div class="shadow-demo">
+                <div class="shadow-box" style="box-shadow:0 4px 6px -1px rgba(0,0,0,0.3);">
+                  <span class="type-caption text-muted">md</span>
+                </div>
+                <span class="spacing-label">shadow-md</span>
+                <span class="spacing-val">0 4px 6px</span>
+              </div>
+              <div class="shadow-demo">
+                <div class="shadow-box" style="box-shadow:0 10px 15px -3px rgba(0,0,0,0.4);">
+                  <span class="type-caption text-muted">lg</span>
+                </div>
+                <span class="spacing-label">shadow-lg</span>
+                <span class="spacing-val">0 10px 15px</span>
+              </div>
+              <div class="shadow-demo">
+                <div class="shadow-box" style="box-shadow:0 20px 25px -5px rgba(0,0,0,0.5);">
+                  <span class="type-caption text-muted">xl</span>
+                </div>
+                <span class="spacing-label">shadow-xl</span>
+                <span class="spacing-val">0 20px 25px</span>
+              </div>
+              <div class="shadow-demo">
+                <div class="shadow-box" style="box-shadow:0 12px 30px rgba(255,191,0,0.22);">
+                  <span class="type-caption text-muted" style="color:hsl(var(--gold))">gold</span>
+                </div>
+                <span class="spacing-label text-gold">gold-glow</span>
+                <span class="spacing-val">rgba(255,191,0,0.22)</span>
+              </div>
+              <div class="shadow-demo">
+                <div class="shadow-box" style="box-shadow:0 0 60px hsl(var(--gold) / 0.15);border-color:hsl(var(--primary)/0.2);">
+                  <span class="type-caption" style="color:hsl(var(--gold))">wide</span>
+                </div>
+                <span class="spacing-label text-gold">glow-wide</span>
+                <span class="spacing-val">decorative blobs</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- ═══════════ COMPONENTS ═══════════ -->
+        <section class="section-sm" id="components">
+          <span class="overline">Components</span>
+          <h2 class="section-title">Component Library</h2>
+          <p class="section-desc mb-12">All components are built from the token system above. Each includes all variants and interactive states.</p>
+
+          <!-- BUTTONS -->
+          <div id="buttons" class="mb-12">
+            <h3 class="type-h4 text-foreground mb-6">Buttons</h3>
+
+            <div class="card mb-6">
+              <h4 class="type-small text-muted mb-4" style="font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">Variants</h4>
+              <div class="flex flex-wrap gap-4 mb-6">
+                <button class="btn btn-primary btn-md">Primary</button>
+                <button class="btn btn-secondary btn-md">Secondary</button>
+                <button class="btn btn-ghost btn-md">Ghost</button>
+                <button class="btn btn-destructive btn-md">Destructive</button>
+                <button class="btn btn-outline-gold btn-md">Gold Outline</button>
+              </div>
+
+              <h4 class="type-small text-muted mb-4" style="font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">Sizes</h4>
+              <div class="flex flex-wrap gap-4 items-center mb-6">
+                <button class="btn btn-primary btn-sm">Small</button>
+                <button class="btn btn-primary btn-md">Medium</button>
+                <button class="btn btn-primary btn-lg">Large</button>
+              </div>
+
+              <h4 class="type-small text-muted mb-4" style="font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">States</h4>
+              <div class="flex flex-wrap gap-4">
+                <button class="btn btn-primary btn-md">Default</button>
+                <button class="btn btn-primary btn-md" style="opacity:0.9;box-shadow:var(--gold-glow)">Hover (gold glow)</button>
+                <button class="btn btn-primary btn-md" style="opacity:0.9;transform:scale(0.98)">Active</button>
+                <button class="btn btn-primary btn-md" disabled>Disabled</button>
+                <button class="btn btn-primary btn-md" style="outline:2px solid hsl(var(--ring));outline-offset:3px">Focus</button>
+              </div>
+            </div>
+
+            <div class="rule-grid">
+              <div class="rule-do">
+                <div class="rule-label">✓ Do</div>
+                <p class="rule-text">Use the Primary (gold) button for the single most important CTA per section. Reserve it for actions like "Join the Beta" or "Get Started."</p>
+              </div>
+              <div class="rule-dont">
+                <div class="rule-label">✕ Don't</div>
+                <p class="rule-text">Don't use Primary buttons for secondary actions or stack multiple Primary buttons next to each other — it dilutes the gold accent's impact.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARDS -->
+          <div id="cards" class="mb-12">
+            <h3 class="type-h4 text-foreground mb-6">Cards</h3>
+
+            <div class="grid-3 mb-6">
+              <div class="card">
+                <div class="feature-icon">🏆</div>
+                <div class="card-title">Standard Card</div>
+                <p class="card-body">bg-surface with border, rounded-2xl, p-8. The base card for all content panels.</p>
+              </div>
+
+              <div class="card card-hover" style="cursor:pointer;">
+                <div class="feature-icon">📈</div>
+                <div class="card-title">Hover Card</div>
+                <p class="card-body">Adds gold border glow on hover. Used for interactive feature cards. Hover me!</p>
+              </div>
+
+              <div class="card card-gold">
+                <div class="feature-icon" style="background:hsl(var(--primary)/0.2)">✨</div>
+                <div class="card-title text-gold">Gold Card</div>
+                <p class="card-body">bg-gold-soft with gold border. Used for highlighted or featured content.</p>
+              </div>
+            </div>
+
+            <div class="card card-gradient text-center mb-6" style="padding:var(--space-12) var(--space-8);">
+              <span class="badge badge-gold mb-4">Founding Collector Status</span>
+              <h3 class="type-h3 text-foreground mb-3">Gradient CTA Card</h3>
+              <p class="card-body" style="max-width:45ch;margin-inline:auto;margin-bottom:var(--space-6);">gradient-to-b from-surface to-background. Used for bottom-of-section calls to action.</p>
+              <button class="btn btn-primary btn-md">Join the Beta</button>
+            </div>
+
+            <div class="rule-grid">
+              <div class="rule-do">
+                <div class="rule-label">✓ Do</div>
+                <p class="rule-text">Use card-hover for feature grids where users scan multiple options. The gold border reveal rewards exploration without being distracting at rest.</p>
+              </div>
+              <div class="rule-dont">
+                <div class="rule-label">✕ Don't</div>
+                <p class="rule-text">Don't use white or light card backgrounds — the design system is entirely dark-first. Any light surfaces will break the luxury aesthetic.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- BADGES -->
+          <div id="badges" class="mb-12">
+            <h3 class="type-h4 text-foreground mb-6">Badges & Labels</h3>
+
+            <div class="card mb-6">
+              <h4 class="type-small text-muted mb-4" style="font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">Badge Variants</h4>
+              <div class="flex flex-wrap gap-3 mb-6">
+                <span class="badge badge-gold">Founding Collector</span>
+                <span class="badge badge-muted">Beta</span>
+                <span class="badge badge-destructive">Error</span>
+                <span class="badge badge-success">Verified</span>
+              </div>
+
+              <h4 class="type-small text-muted mb-4" style="font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">Section Labels</h4>
+              <div class="flex flex-wrap gap-6 items-start">
+                <div>
+                  <span class="overline">Overline Label</span>
+                  <div class="type-caption text-muted mt-1">text-xs / 0.15em tracking</div>
+                </div>
+                <div>
+                  <span class="badge badge-gold" style="border-radius:9999px;padding:6px 16px;text-transform:uppercase;font-size:0.8125rem;letter-spacing:0.05em;">Now in Beta</span>
+                  <div class="type-caption text-muted mt-1">pill badge — hero use</div>
+                </div>
+                <div>
+                  <span class="type-label text-gold">Features</span>
+                  <div class="type-caption text-muted mt-1">text-label — nav/section</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- FORMS -->
+          <div id="forms" class="mb-12">
+            <h3 class="type-h4 text-foreground mb-6">Form Elements</h3>
+
+            <div class="card">
+              <div style="max-width:480px;display:flex;flex-direction:column;gap:var(--space-6);">
+                <div class="form-group">
+                  <label class="label">Email address</label>
+                  <input class="input" type="email" placeholder="you@example.com" />
+                  <span class="helper-text">We'll send your early access invite here.</span>
+                </div>
+
+                <div class="form-group">
+                  <label class="label">Full name</label>
+                  <input class="input" type="text" placeholder="Jordan Smith" />
+                </div>
+
+                <div class="form-group">
+                  <label class="label">Focus state</label>
+                  <input class="input" type="text" placeholder="Click to see focus ring" style="border-color:hsl(var(--primary));box-shadow:0 0 0 1px hsl(var(--primary));" />
+                </div>
+
+                <div class="form-group">
+                  <label class="label">Error state</label>
+                  <input class="input input-error" type="email" value="bad@" />
+                  <span class="error-text">Please enter a valid email address.</span>
+                </div>
+
+                <div class="form-group">
+                  <label class="label" style="opacity:0.5">Disabled</label>
+                  <input class="input" type="text" value="Cannot edit" disabled />
+                </div>
+
+                <button class="btn btn-primary btn-md" style="align-self:flex-start;">Join the Founding Collectors</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- NAVIGATION -->
+          <div id="navigation" class="mb-12">
+            <h3 class="type-h4 text-foreground mb-6">Navigation</h3>
+
+            <div class="card mb-6" style="overflow:hidden;padding:0;">
+              <div class="nav-demo">
+                <div class="nav-demo-logo">
+                  <span style="width:24px;height:24px;background:hsl(var(--gold));border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:12px;">🏆</span>
+                  Relic Roster
+                </div>
+                <ul class="nav-demo-links">
+                  <li><a href="#" class="active">Home</a></li>
+                  <li><a href="#">Features</a></li>
+                  <li><a href="#">About</a></li>
+                  <li><a href="#">Contact</a></li>
+                </ul>
+                <button class="btn btn-primary btn-sm">Join the Beta</button>
+              </div>
+            </div>
+
+            <div class="rule-grid">
+              <div class="rule-do">
+                <div class="rule-label">✓ Do</div>
+                <p class="rule-text">Use backdrop-blur-xl with bg-background/75 for the sticky nav. This creates a frosted-glass effect that maintains context as users scroll.</p>
+              </div>
+              <div class="rule-dont">
+                <div class="rule-label">✕ Don't</div>
+                <p class="rule-text">Don't make nav links gold by default — only the active state or the CTA button should use the gold color. Use muted-foreground for idle links.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- ═══════════ LAYOUT ═══════════ -->
+        <section class="section-sm" id="layout">
+          <div class="section-header">
+            <span class="overline">System</span>
+            <h2 class="section-title">Layout System</h2>
+            <p class="section-desc">12-column grid for hero sections, 3-column for feature grids, 2-column for content pairs. Max container width: 1180px.</p>
+          </div>
+
+          <div class="card mb-8">
+            <h4 class="type-small text-muted mb-4" style="font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">12-Column Grid (Hero Layout)</h4>
+            <div class="demo-grid" style="grid-template-columns:repeat(12,1fr);gap:8px;margin-bottom:var(--space-4);">
+              <div class="demo-col" style="grid-column:span 7;">7 cols — Content</div>
+              <div class="demo-col" style="grid-column:span 5;">5 cols — Media</div>
+            </div>
+            <p class="type-small text-muted"><span class="surface-chip">grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16</span></p>
+          </div>
+
+          <div class="card mb-8">
+            <h4 class="type-small text-muted mb-4" style="font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">3-Column Feature Grid</h4>
+            <div class="demo-grid" style="grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:var(--space-4);">
+              <div class="demo-col">Feature 1</div>
+              <div class="demo-col">Feature 2</div>
+              <div class="demo-col">Feature 3</div>
+            </div>
+            <p class="type-small text-muted"><span class="surface-chip">grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6</span></p>
+          </div>
+
+          <div class="card mb-8">
+            <h4 class="type-small text-muted mb-4" style="font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">2-Column Grid</h4>
+            <div class="demo-grid" style="grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:var(--space-4);">
+              <div class="demo-col">Column A</div>
+              <div class="demo-col">Column B</div>
+            </div>
+            <p class="type-small text-muted"><span class="surface-chip">grid grid-cols-1 md:grid-cols-2 gap-6</span></p>
+          </div>
+
+          <div class="card">
+            <h4 class="type-small text-muted mb-4" style="font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">Breakpoints</h4>
+            <div style="display:flex;flex-direction:column;gap:var(--space-3);">
+              <div class="flex items-center gap-4">
+                <span class="surface-chip">sm</span>
+                <span class="type-small text-muted">≥ 640px — 2-col feature grids</span>
+              </div>
+              <div class="flex items-center gap-4">
+                <span class="surface-chip">md</span>
+                <span class="type-small text-muted">≥ 768px — desktop nav visible, 2-col layouts</span>
+              </div>
+              <div class="flex items-center gap-4">
+                <span class="surface-chip">lg</span>
+                <span class="type-small text-muted">≥ 1024px — 12-col hero, 3-col features</span>
+              </div>
+              <div class="flex items-center gap-4">
+                <span class="surface-chip">container</span>
+                <span class="type-small text-muted">max-width: 1180px, padding: 16px</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- ═══════════ MOTION ═══════════ -->
+        <section class="section-sm" id="motion">
+          <div class="section-header">
+            <span class="overline">System</span>
+            <h2 class="section-title">Motion & Interaction</h2>
+            <p class="section-desc">Transitions are fast and functional — 150–200ms with ease easing. The gold glow is the primary hover reward. Hover over the boxes below to see each pattern.</p>
+          </div>
+
+          <div class="card">
+            <h4 class="type-small text-muted mb-6" style="font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">Hover Patterns (hover over each)</h4>
+            <div class="motion-demo">
+              <div>
+                <div class="motion-box motion-opacity">Opacity<br>90%</div>
+                <div class="type-caption text-muted mt-2 text-center">Button hover<br>150ms ease</div>
+              </div>
+              <div>
+                <div class="motion-box motion-colors">Color<br>Shift</div>
+                <div class="type-caption text-muted mt-2 text-center">Nav links<br>200ms ease</div>
+              </div>
+              <div>
+                <div class="motion-box motion-scale">Scale<br>1.05</div>
+                <div class="type-caption text-muted mt-2 text-center">Icon hover<br>150ms ease</div>
+              </div>
+              <div>
+                <div class="motion-box motion-glow">Gold<br>Glow</div>
+                <div class="type-caption text-muted mt-2 text-center">Card CTA<br>200ms ease</div>
+              </div>
+              <div>
+                <div class="motion-box motion-all">Full<br>Card</div>
+                <div class="type-caption text-muted mt-2 text-center">Feature cards<br>200ms ease</div>
+              </div>
+            </div>
+
+            <div class="divider mt-4 mb-4"></div>
+
+            <h4 class="type-small text-muted mb-4" style="font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">Timing Reference</h4>
+            <div style="display:flex;flex-direction:column;gap:var(--space-2);">
+              <div class="flex items-center gap-4">
+                <span class="surface-chip">150ms ease</span>
+                <span class="type-small text-muted">Button opacity, scale — immediate feedback</span>
+              </div>
+              <div class="flex items-center gap-4">
+                <span class="surface-chip">200ms ease</span>
+                <span class="type-small text-muted">Card borders, color, glow — slightly softer</span>
+              </div>
+              <div class="flex items-center gap-4">
+                <span class="surface-chip">300ms ease</span>
+                <span class="type-small text-muted">Mobile menu, dropdowns — panel transitions</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- ═══════════ DO / DON'T ═══════════ -->
+        <section class="section-sm" id="rules">
+          <div class="section-header">
+            <span class="overline">Usage</span>
+            <h2 class="section-title">Do / Don't Patterns</h2>
+            <p class="section-desc">How the original site applies each token — distilled into rules for consistent application.</p>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:var(--space-6);">
+            <div class="rule-grid">
+              <div class="rule-do">
+                <div class="rule-label">✓ Color: Do</div>
+                <p class="rule-text">Use gold (#FFBF00) exclusively for brand accents, CTAs, overlines, and active/focus states. It should always stand out.</p>
+              </div>
+              <div class="rule-dont">
+                <div class="rule-label">✕ Color: Don't</div>
+                <p class="rule-text">Don't use gold for body copy, decorative dividers, or muted-state elements. Overusing it destroys its premium signal.</p>
+              </div>
+            </div>
+
+            <div class="rule-grid">
+              <div class="rule-do">
+                <div class="rule-label">✓ Typography: Do</div>
+                <p class="rule-text">Use -0.03em letter-spacing and 1.05 line-height for all display and heading text. This gives the site its tight, editorial feel.</p>
+              </div>
+              <div class="rule-dont">
+                <div class="rule-label">✕ Typography: Don't</div>
+                <p class="rule-text">Don't use default browser letter-spacing for headings. It produces a loose, generic look that undermines the premium aesthetic.</p>
+              </div>
+            </div>
+
+            <div class="rule-grid">
+              <div class="rule-do">
+                <div class="rule-label">✓ Cards: Do</div>
+                <p class="rule-text">Keep cards at --surface background (not --background). The 4% luminance difference between background and card creates subtle, dark-mode-friendly depth.</p>
+              </div>
+              <div class="rule-dont">
+                <div class="rule-label">✕ Cards: Don't</div>
+                <p class="rule-text">Don't increase border opacity beyond 0.08 for resting states. The border should barely whisper at rest, then become visible on hover via gold tinting.</p>
+              </div>
+            </div>
+
+            <div class="rule-grid">
+              <div class="rule-do">
+                <div class="rule-label">✓ Glow: Do</div>
+                <p class="rule-text">Use the gold glow (rgba 255,191,0, 0.22 at 12px blur) on hover states and key CTA buttons. It signals interactivity and reinforces the gold brand.</p>
+              </div>
+              <div class="rule-dont">
+                <div class="rule-label">✕ Glow: Don't</div>
+                <p class="rule-text">Don't apply gold glow to resting elements or non-interactive content. Constant glow feels synthetic rather than premium.</p>
+              </div>
+            </div>
+
+            <div class="rule-grid">
+              <div class="rule-do">
+                <div class="rule-label">✓ Spacing: Do</div>
+                <p class="rule-text">Give sections 80–112px vertical breathing room. The generous whitespace (all in dark) makes the gold moments feel earned.</p>
+              </div>
+              <div class="rule-dont">
+                <div class="rule-label">✕ Spacing: Don't</div>
+                <p class="rule-text">Don't compress section padding to save space. Tighter spacing on a dark background feels cluttered, not efficient.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- ═══════════ CSS TOKENS ═══════════ -->
+        <section class="section-sm" id="tokens">
+          <div class="section-header">
+            <span class="overline">Copy & Paste</span>
+            <h2 class="section-title">CSS Custom Properties</h2>
+            <p class="section-desc">Drop this block into any project's stylesheet to instantly adopt the Relic Roster design token system.</p>
+          </div>
+
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyTokens(this)">Copy</button>
+            <pre id="token-block"><span class="token-comment">/* ============================================================
+   RELIC ROSTER DESIGN TOKENS
+   relicroster.com — May 2025
+============================================================ */</span>
+<span class="token-punctuation">:root {</span>
+  <span class="token-comment">/* Backgrounds */</span>
+  <span class="token-property">--background</span><span class="token-punctuation">:</span>          <span class="token-value">240 7% 4.5%</span><span class="token-punctuation">;</span>    <span class="token-comment">/* #0B0B0D */</span>
+  <span class="token-property">--foreground</span><span class="token-punctuation">:</span>          <span class="token-value">0 0% 100%</span><span class="token-punctuation">;</span>
+
+  <span class="token-comment">/* Surfaces */</span>
+  <span class="token-property">--card</span><span class="token-punctuation">:</span>                <span class="token-value">240 6% 8.5%</span><span class="token-punctuation">;</span>    <span class="token-comment">/* #141417 */</span>
+  <span class="token-property">--card-foreground</span><span class="token-punctuation">:</span>     <span class="token-value">0 0% 100%</span><span class="token-punctuation">;</span>
+  <span class="token-property">--surface</span><span class="token-punctuation">:</span>             <span class="token-value">240 6% 8.5%</span><span class="token-punctuation">;</span>
+  <span class="token-property">--surface-2</span><span class="token-punctuation">:</span>           <span class="token-value">240 5% 11%</span><span class="token-punctuation">;</span>     <span class="token-comment">/* #1B1B1D */</span>
+  <span class="token-property">--secondary</span><span class="token-punctuation">:</span>           <span class="token-value">240 4% 14%</span><span class="token-punctuation">;</span>     <span class="token-comment">/* #222225 */</span>
+  <span class="token-property">--secondary-foreground</span><span class="token-punctuation">:</span> <span class="token-value">240 5% 74%</span><span class="token-punctuation">;</span>   <span class="token-comment">/* #B9B9C0 */</span>
+  <span class="token-property">--muted</span><span class="token-punctuation">:</span>               <span class="token-value">240 4% 14%</span><span class="token-punctuation">;</span>
+  <span class="token-property">--muted-foreground</span><span class="token-punctuation">:</span>    <span class="token-value">240 5% 74%</span><span class="token-punctuation">;</span>
+  <span class="token-property">--popover</span><span class="token-punctuation">:</span>             <span class="token-value">240 6% 8.5%</span><span class="token-punctuation">;</span>
+  <span class="token-property">--popover-foreground</span><span class="token-punctuation">:</span>  <span class="token-value">0 0% 100%</span><span class="token-punctuation">;</span>
+
+  <span class="token-comment">/* Brand / Gold */</span>
+  <span class="token-property">--primary</span><span class="token-punctuation">:</span>             <span class="token-value">45 100% 50%</span><span class="token-punctuation">;</span>    <span class="token-comment">/* #FFBF00 */</span>
+  <span class="token-property">--primary-foreground</span><span class="token-punctuation">:</span>  <span class="token-value">0 0% 7%</span><span class="token-punctuation">;</span>        <span class="token-comment">/* #121212 */</span>
+  <span class="token-property">--accent</span><span class="token-punctuation">:</span>              <span class="token-value">45 100% 50%</span><span class="token-punctuation">;</span>
+  <span class="token-property">--accent-foreground</span><span class="token-punctuation">:</span>   <span class="token-value">0 0% 7%</span><span class="token-punctuation">;</span>
+  <span class="token-property">--gold</span><span class="token-punctuation">:</span>                <span class="token-value">45 100% 50%</span><span class="token-punctuation">;</span>
+  <span class="token-property">--gold-soft</span><span class="token-punctuation">:</span>           <span class="token-value">45 100% 50% / 0.12</span><span class="token-punctuation">;</span>
+  <span class="token-property">--gold-glow</span><span class="token-punctuation">:</span>           <span class="token-value">0 12px 30px rgba(255, 191, 0, 0.22)</span><span class="token-punctuation">;</span>
+
+  <span class="token-comment">/* Semantic */</span>
+  <span class="token-property">--destructive</span><span class="token-punctuation">:</span>         <span class="token-value">0 84.2% 60.2%</span><span class="token-punctuation">;</span>  <span class="token-comment">/* #EF4444 */</span>
+  <span class="token-property">--destructive-foreground</span><span class="token-punctuation">:</span> <span class="token-value">210 40% 98%</span><span class="token-punctuation">;</span>
+
+  <span class="token-comment">/* Borders & Inputs */</span>
+  <span class="token-property">--border</span><span class="token-punctuation">:</span>              <span class="token-value">0 0% 100% / 0.08</span><span class="token-punctuation">;</span>
+  <span class="token-property">--input</span><span class="token-punctuation">:</span>               <span class="token-value">0 0% 100% / 0.08</span><span class="token-punctuation">;</span>
+  <span class="token-property">--ring</span><span class="token-punctuation">:</span>                <span class="token-value">45 100% 50%</span><span class="token-punctuation">;</span>
+
+  <span class="token-comment">/* Shape */</span>
+  <span class="token-property">--radius</span><span class="token-punctuation">:</span>              <span class="token-value">0.75rem</span><span class="token-punctuation">;</span>         <span class="token-comment">/* 12px */</span>
+
+  <span class="token-comment">/* Typography */</span>
+  <span class="token-property">--font-sans</span><span class="token-punctuation">:</span>           <span class="token-value">'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif</span><span class="token-punctuation">;</span>
+
+  <span class="token-comment">/* Spacing (4px base) */</span>
+  <span class="token-property">--space-1</span><span class="token-punctuation">:</span>  <span class="token-value">0.25rem</span><span class="token-punctuation">;</span>
+  <span class="token-property">--space-2</span><span class="token-punctuation">:</span>  <span class="token-value">0.5rem</span><span class="token-punctuation">;</span>
+  <span class="token-property">--space-3</span><span class="token-punctuation">:</span>  <span class="token-value">0.75rem</span><span class="token-punctuation">;</span>
+  <span class="token-property">--space-4</span><span class="token-punctuation">:</span>  <span class="token-value">1rem</span><span class="token-punctuation">;</span>
+  <span class="token-property">--space-5</span><span class="token-punctuation">:</span>  <span class="token-value">1.25rem</span><span class="token-punctuation">;</span>
+  <span class="token-property">--space-6</span><span class="token-punctuation">:</span>  <span class="token-value">1.5rem</span><span class="token-punctuation">;</span>
+  <span class="token-property">--space-8</span><span class="token-punctuation">:</span>  <span class="token-value">2rem</span><span class="token-punctuation">;</span>
+  <span class="token-property">--space-10</span><span class="token-punctuation">:</span> <span class="token-value">2.5rem</span><span class="token-punctuation">;</span>
+  <span class="token-property">--space-12</span><span class="token-punctuation">:</span> <span class="token-value">3rem</span><span class="token-punctuation">;</span>
+  <span class="token-property">--space-16</span><span class="token-punctuation">:</span> <span class="token-value">4rem</span><span class="token-punctuation">;</span>
+  <span class="token-property">--space-20</span><span class="token-punctuation">:</span> <span class="token-value">5rem</span><span class="token-punctuation">;</span>
+  <span class="token-property">--space-28</span><span class="token-punctuation">:</span> <span class="token-value">7rem</span><span class="token-punctuation">;</span>
+
+  <span class="token-comment">/* Container */</span>
+  <span class="token-property">--container-max</span><span class="token-punctuation">:</span>       <span class="token-value">1180px</span><span class="token-punctuation">;</span>
+<span class="token-punctuation">}</span>
+
+<span class="token-comment">/* Base application */</span>
+<span class="token-property">body</span> <span class="token-punctuation">{</span>
+  <span class="token-property">background-color</span><span class="token-punctuation">:</span> <span class="token-value">hsl(var(--background))</span><span class="token-punctuation">;</span>
+  <span class="token-property">color</span><span class="token-punctuation">:</span>            <span class="token-value">hsl(var(--foreground))</span><span class="token-punctuation">;</span>
+  <span class="token-property">font-family</span><span class="token-punctuation">:</span>      <span class="token-value">var(--font-sans)</span><span class="token-punctuation">;</span>
+  <span class="token-property">-webkit-font-smoothing</span><span class="token-punctuation">:</span> <span class="token-value">antialiased</span><span class="token-punctuation">;</span>
+<span class="token-punctuation">}</span>
+
+<span class="token-property">h1, h2, h3, h4, h5, h6</span> <span class="token-punctuation">{</span>
+  <span class="token-property">letter-spacing</span><span class="token-punctuation">:</span> <span class="token-value">-0.03em</span><span class="token-punctuation">;</span>
+  <span class="token-property">line-height</span><span class="token-punctuation">:</span>     <span class="token-value">1.05</span><span class="token-punctuation">;</span>
+<span class="token-punctuation">}</span></pre>
+          </div>
+        </section>
+
+      </main>
+    </div><!-- /page-layout -->
+  </div><!-- /container -->
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <p>Relic Roster Design System — extracted from <a href="https://relicroster.com" target="_blank">relicroster.com</a> · Built May 2025</p>
+    </div>
+  </footer>
+
+  <script>
+    // Copy tokens to clipboard
+    function copyTokens(btn) {
+      const pre = document.getElementById('token-block');
+      const text = pre.innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = 'Copied!';
+        btn.style.color = 'hsl(45 100% 50%)';
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.style.color = '';
+        }, 2000);
+      });
+    }
+
+    // Scrollspy for TOC
+    const sections = document.querySelectorAll('section[id], div[id]');
+    const tocLinks = document.querySelectorAll('#toc a');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          tocLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + entry.target.id) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }, {
+      rootMargin: '-20% 0px -70% 0px'
+    });
+
+    sections.forEach(s => observer.observe(s));
+  </script>
+</body>
+</html>
