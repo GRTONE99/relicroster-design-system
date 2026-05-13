@@ -1105,6 +1105,158 @@
     .mt-4 { margin-top: var(--space-4); }
     .text-center { text-align: center; }
 
+    /* ============================================================
+       LOGO SECTION
+    ============================================================ */
+    .logo-upload-zone {
+      border: 2px dashed hsl(var(--border));
+      border-radius: calc(var(--radius) * 1.333);
+      padding: var(--space-12) var(--space-8);
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s ease, background 0.2s ease;
+      position: relative;
+    }
+
+    .logo-upload-zone:hover,
+    .logo-upload-zone.dragover {
+      border-color: hsl(var(--primary) / 0.5);
+      background: hsl(var(--gold-soft));
+    }
+
+    .logo-upload-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    .logo-upload-icon {
+      font-size: 2rem;
+      margin-bottom: var(--space-3);
+    }
+
+    .logo-upload-text {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: hsl(var(--foreground));
+      margin-bottom: var(--space-1);
+    }
+
+    .logo-upload-hint {
+      font-size: 0.8125rem;
+      color: hsl(var(--muted-foreground));
+    }
+
+    .logo-preview-wrap {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .logo-preview-wrap.visible {
+      display: flex;
+    }
+
+    .logo-preview-wrap img {
+      max-height: 80px;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    .logo-remove-btn {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: hsl(var(--destructive));
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-sans);
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: background 0.15s;
+    }
+
+    .logo-remove-btn:hover {
+      background: hsl(var(--destructive) / 0.1);
+    }
+
+    .logo-bg-swatch {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius);
+      border: 1px solid hsl(var(--border));
+      padding: var(--space-6);
+      min-height: 100px;
+    }
+
+    .logo-bg-swatch img {
+      max-height: 60px;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    .logo-bg-swatch .placeholder-text {
+      font-size: 0.8125rem;
+      color: hsl(var(--muted-foreground));
+    }
+
+    .logo-clearance-demo {
+      position: relative;
+      display: inline-block;
+    }
+
+    .logo-clearance-demo img {
+      max-height: 60px;
+      max-width: 200px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .logo-clearance-box {
+      position: absolute;
+      inset: -16px;
+      border: 1px dashed hsl(var(--primary) / 0.4);
+      border-radius: 4px;
+      pointer-events: none;
+    }
+
+    .logo-clearance-label {
+      position: absolute;
+      bottom: -32px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      color: hsl(var(--gold));
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      white-space: nowrap;
+    }
+
+    .logo-size-row {
+      display: flex;
+      align-items: flex-end;
+      gap: var(--space-8);
+      flex-wrap: wrap;
+    }
+
+    .logo-size-demo {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-2);
+    }
+
+    .logo-size-demo img {
+      object-fit: contain;
+      display: block;
+    }
+
     .surface-chip {
       display: inline-block;
       padding: 3px 10px;
@@ -1127,6 +1279,7 @@
         Relic Roster <span style="color:hsl(var(--muted-foreground));font-weight:400;margin-left:4px;">Design System</span>
       </a>
       <ul class="nav-links">
+        <li><a href="#logo">Logo</a></li>
         <li><a href="#colors">Colors</a></li>
         <li><a href="#typography">Type</a></li>
         <li><a href="#spacing">Spacing</a></li>
@@ -1163,7 +1316,8 @@
       <!-- TOC SIDEBAR -->
       <aside class="toc-sidebar">
         <nav class="toc" id="toc">
-          <a href="#colors" class="active">Colors</a>
+          <a href="#logo">Logo</a>
+          <a href="#colors">Colors</a>
           <a href="#typography">Typography</a>
           <a href="#spacing">Spacing</a>
           <a href="#radius">Border Radius</a>
@@ -1183,6 +1337,152 @@
 
       <!-- MAIN -->
       <main>
+
+        <!-- ═══════════ LOGO ═══════════ -->
+        <section class="section-sm" id="logo">
+          <div class="section-header">
+            <span class="overline">Brand Identity</span>
+            <h2 class="section-title">Logo</h2>
+            <p class="section-desc">Upload the Relic Roster logo to populate all usage examples below — on dark, on gold, size scale, and minimum clear space.</p>
+          </div>
+
+          <!-- Upload zone -->
+          <div class="card mb-8" id="upload-card">
+            <label class="logo-upload-zone" id="upload-zone">
+              <input type="file" id="logo-input" accept="image/png,image/svg+xml,image/jpeg,image/webp" />
+              <div id="upload-prompt">
+                <div class="logo-upload-icon">🖼️</div>
+                <div class="logo-upload-text">Drop your logo here or click to browse</div>
+                <div class="logo-upload-hint">PNG, SVG, JPG or WebP — transparent PNG or SVG recommended</div>
+              </div>
+              <div class="logo-preview-wrap" id="upload-preview">
+                <img id="preview-img" src="" alt="Logo preview" />
+                <div class="type-caption text-muted" id="preview-filename"></div>
+                <button class="logo-remove-btn" id="remove-logo" type="button">Remove</button>
+              </div>
+            </label>
+          </div>
+
+          <!-- Backgrounds -->
+          <h3 class="type-h5 text-foreground mb-4">On Backgrounds</h3>
+          <div class="grid-3 mb-8">
+            <div>
+              <div class="logo-bg-swatch mb-2" style="background:hsl(var(--background));">
+                <img class="logo-placed" src="" alt="" style="display:none;" />
+                <span class="placeholder-text logo-placeholder-text">Logo on Background<br><span style="font-size:0.75rem;opacity:0.6;">#0B0B0D</span></span>
+              </div>
+              <div class="type-caption text-muted">Dark background — primary use</div>
+            </div>
+            <div>
+              <div class="logo-bg-swatch mb-2" style="background:hsl(var(--card));">
+                <img class="logo-placed" src="" alt="" style="display:none;" />
+                <span class="placeholder-text logo-placeholder-text">Logo on Card<br><span style="font-size:0.75rem;opacity:0.6;">#141417</span></span>
+              </div>
+              <div class="type-caption text-muted">Card surface — nav & panels</div>
+            </div>
+            <div>
+              <div class="logo-bg-swatch mb-2" style="background:hsl(var(--primary));">
+                <img class="logo-placed" src="" alt="" style="display:none;" />
+                <span class="placeholder-text logo-placeholder-text">Logo on Gold<br><span style="font-size:0.75rem;opacity:0.6;">#FFBF00</span></span>
+              </div>
+              <div class="type-caption text-muted">Gold — badges & CTAs</div>
+            </div>
+            <div>
+              <div class="logo-bg-swatch mb-2" style="background:#FFFFFF;">
+                <img class="logo-placed" src="" alt="" style="display:none;" />
+                <span class="placeholder-text logo-placeholder-text" style="color:#888;">Logo on White<br><span style="font-size:0.75rem;opacity:0.6;">#FFFFFF</span></span>
+              </div>
+              <div class="type-caption text-muted">White — print / light contexts</div>
+            </div>
+            <div>
+              <div class="logo-bg-swatch mb-2" style="background:hsl(var(--secondary));">
+                <img class="logo-placed" src="" alt="" style="display:none;" />
+                <span class="placeholder-text logo-placeholder-text">Logo on Secondary<br><span style="font-size:0.75rem;opacity:0.6;">#222225</span></span>
+              </div>
+              <div class="type-caption text-muted">Secondary — sidebar & muted UI</div>
+            </div>
+            <div>
+              <div class="logo-bg-swatch mb-2" style="background:hsl(var(--gold-soft)); border-color:hsl(var(--primary)/0.2);">
+                <img class="logo-placed" src="" alt="" style="display:none;" />
+                <span class="placeholder-text logo-placeholder-text">Logo on Gold Soft<br><span style="font-size:0.75rem;opacity:0.6;">rgba(255,191,0,0.12)</span></span>
+              </div>
+              <div class="type-caption text-muted">Gold-soft — highlight panels</div>
+            </div>
+          </div>
+
+          <!-- Size scale -->
+          <h3 class="type-h5 text-foreground mb-4">Size Scale</h3>
+          <div class="card mb-8">
+            <div class="logo-size-row">
+              <div class="logo-size-demo">
+                <img class="logo-placed" src="" alt="" style="height:16px;display:none;" />
+                <span class="logo-placeholder-text type-caption text-muted" style="font-size:0.75rem;">16px</span>
+                <span class="type-caption text-muted mt-1">Favicon / micro</span>
+              </div>
+              <div class="logo-size-demo">
+                <img class="logo-placed" src="" alt="" style="height:24px;display:none;" />
+                <span class="logo-placeholder-text type-caption text-muted" style="font-size:0.75rem;">24px</span>
+                <span class="type-caption text-muted mt-1">Nav bar</span>
+              </div>
+              <div class="logo-size-demo">
+                <img class="logo-placed" src="" alt="" style="height:32px;display:none;" />
+                <span class="logo-placeholder-text type-caption text-muted" style="font-size:0.75rem;">32px</span>
+                <span class="type-caption text-muted mt-1">Mobile nav</span>
+              </div>
+              <div class="logo-size-demo">
+                <img class="logo-placed" src="" alt="" style="height:48px;display:none;" />
+                <span class="logo-placeholder-text type-caption text-muted" style="font-size:0.75rem;">48px</span>
+                <span class="type-caption text-muted mt-1">Hero / email header</span>
+              </div>
+              <div class="logo-size-demo">
+                <img class="logo-placed" src="" alt="" style="height:72px;display:none;" />
+                <span class="logo-placeholder-text type-caption text-muted" style="font-size:0.75rem;">72px</span>
+                <span class="type-caption text-muted mt-1">Print / OG image</span>
+              </div>
+              <div class="logo-size-demo">
+                <img class="logo-placed" src="" alt="" style="height:120px;display:none;" />
+                <span class="logo-placeholder-text type-caption text-muted" style="font-size:0.75rem;">120px</span>
+                <span class="type-caption text-muted mt-1">Landing hero</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Clear space -->
+          <h3 class="type-h5 text-foreground mb-4">Minimum Clear Space</h3>
+          <div class="card mb-8" style="text-align:center;">
+            <div style="display:flex;align-items:center;justify-content:center;min-height:140px;" id="clearspace-wrap">
+              <div class="logo-clearance-demo" id="clearspace-demo" style="display:none;">
+                <img id="clearspace-img" src="" alt="Logo clear space" style="max-height:60px;max-width:200px;object-fit:contain;display:block;" />
+                <div class="logo-clearance-box"></div>
+                <div class="logo-clearance-label">1× logo height clear space on all sides</div>
+              </div>
+              <p class="type-small text-muted" id="clearspace-placeholder">Upload a logo to see the minimum clear space demonstration.</p>
+            </div>
+          </div>
+
+          <!-- Do / Don't -->
+          <h3 class="type-h5 text-foreground mb-4">Logo Usage Rules</h3>
+          <div class="rule-grid">
+            <div class="rule-do">
+              <div class="rule-label">✓ Do</div>
+              <p class="rule-text">Use the logo on dark backgrounds (#0B0B0D or #141417) as the primary application. The gold accent in the mark reads best against near-black.</p>
+            </div>
+            <div class="rule-dont">
+              <div class="rule-label">✕ Don't</div>
+              <p class="rule-text">Don't place the logo on mid-tone gray backgrounds where contrast is insufficient. Test on any new background with a contrast checker.</p>
+            </div>
+            <div class="rule-do">
+              <div class="rule-label">✓ Do</div>
+              <p class="rule-text">Maintain a minimum clear space equal to the logo's height on all four sides. Never crowd the logo with other elements.</p>
+            </div>
+            <div class="rule-dont">
+              <div class="rule-label">✕ Don't</div>
+              <p class="rule-text">Don't recolor, stretch, rotate, add drop shadows, or apply effects to the logo. Use only the approved lockups at 100% opacity.</p>
+            </div>
+          </div>
+        </section>
+
+        <div class="divider"></div>
 
         <!-- ═══════════ COLORS ═══════════ -->
         <section class="section-sm" id="colors">
@@ -2131,6 +2431,98 @@
   </footer>
 
   <script>
+    // ── Logo upload & populate ──────────────────────────────────
+    const logoInput    = document.getElementById('logo-input');
+    const uploadZone   = document.getElementById('upload-zone');
+    const uploadPrompt = document.getElementById('upload-prompt');
+    const uploadPreview = document.getElementById('upload-preview');
+    const previewImg   = document.getElementById('preview-img');
+    const previewName  = document.getElementById('preview-filename');
+    const removeBtn    = document.getElementById('remove-logo');
+
+    function applyLogo(src, filename) {
+      // Upload zone preview
+      previewImg.src = src;
+      previewName.textContent = filename || '';
+      uploadPrompt.style.display = 'none';
+      uploadPreview.classList.add('visible');
+
+      // Background swatches
+      document.querySelectorAll('.logo-bg-swatch').forEach(swatch => {
+        const img = swatch.querySelector('.logo-placed');
+        const txt = swatch.querySelector('.logo-placeholder-text');
+        img.src = src;
+        img.style.display = 'block';
+        if (txt) txt.style.display = 'none';
+      });
+
+      // Size scale
+      document.querySelectorAll('.logo-size-demo').forEach(demo => {
+        const img = demo.querySelector('.logo-placed');
+        const txt = demo.querySelector('.logo-placeholder-text');
+        img.style.display = 'block';
+        img.src = src;
+        if (txt) txt.style.display = 'none';
+      });
+
+      // Clear space
+      const clearDemo = document.getElementById('clearspace-demo');
+      const clearPlaceholder = document.getElementById('clearspace-placeholder');
+      const clearImg = document.getElementById('clearspace-img');
+      clearImg.src = src;
+      clearDemo.style.display = 'inline-block';
+      clearPlaceholder.style.display = 'none';
+    }
+
+    function removeLogo() {
+      previewImg.src = '';
+      previewName.textContent = '';
+      uploadPrompt.style.display = '';
+      uploadPreview.classList.remove('visible');
+      logoInput.value = '';
+
+      document.querySelectorAll('.logo-placed').forEach(img => {
+        img.src = '';
+        img.style.display = 'none';
+      });
+      document.querySelectorAll('.logo-placeholder-text').forEach(txt => {
+        txt.style.display = '';
+      });
+
+      document.getElementById('clearspace-demo').style.display = 'none';
+      document.getElementById('clearspace-placeholder').style.display = '';
+    }
+
+    logoInput.addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = ev => applyLogo(ev.target.result, file.name);
+      reader.readAsDataURL(file);
+    });
+
+    removeBtn.addEventListener('click', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      removeLogo();
+    });
+
+    // Drag-and-drop
+    uploadZone.addEventListener('dragover', e => {
+      e.preventDefault();
+      uploadZone.classList.add('dragover');
+    });
+    uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
+    uploadZone.addEventListener('drop', e => {
+      e.preventDefault();
+      uploadZone.classList.remove('dragover');
+      const file = e.dataTransfer.files[0];
+      if (!file || !file.type.startsWith('image/')) return;
+      const reader = new FileReader();
+      reader.onload = ev => applyLogo(ev.target.result, file.name);
+      reader.readAsDataURL(file);
+    });
+
     // Copy tokens to clipboard
     function copyTokens(btn) {
       const pre = document.getElementById('token-block');
