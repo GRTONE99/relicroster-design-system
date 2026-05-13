@@ -1343,120 +1343,167 @@
           <div class="section-header">
             <span class="overline">Brand Identity</span>
             <h2 class="section-title">Logo</h2>
-            <p class="section-desc">Upload the Relic Roster logo to populate all usage examples below — on dark, on gold, size scale, and minimum clear space.</p>
+            <p class="section-desc">Upload each logo variant to populate all usage examples — backgrounds, size scale, and clear space are wired to the right variant automatically.</p>
           </div>
 
-          <!-- Upload zone -->
-          <div class="card mb-8" id="upload-card">
-            <label class="logo-upload-zone" id="upload-zone">
-              <input type="file" id="logo-input" accept="image/png,image/svg+xml,image/jpeg,image/webp" />
-              <div id="upload-prompt">
-                <div class="logo-upload-icon">🖼️</div>
-                <div class="logo-upload-text">Drop your logo here or click to browse</div>
-                <div class="logo-upload-hint">PNG, SVG, JPG or WebP — transparent PNG or SVG recommended</div>
-              </div>
-              <div class="logo-preview-wrap" id="upload-preview">
-                <img id="preview-img" src="" alt="Logo preview" />
-                <div class="type-caption text-muted" id="preview-filename"></div>
-                <button class="logo-remove-btn" id="remove-logo" type="button">Remove</button>
-              </div>
-            </label>
+          <!-- Three upload zones -->
+          <div class="grid-3 mb-10">
+
+            <!-- 1. Full lockup -->
+            <div>
+              <div class="type-small text-foreground mb-2" style="font-weight:600;">Full Lockup</div>
+              <div class="type-caption text-muted mb-3">Mark + wordmark — dark or transparent background. Used for hero, headers, large placements.</div>
+              <label class="logo-upload-zone" id="zone-full">
+                <input type="file" id="input-full" accept="image/png,image/svg+xml,image/jpeg,image/webp" />
+                <div class="upload-prompt" id="prompt-full">
+                  <div class="logo-upload-icon">🖼️</div>
+                  <div class="logo-upload-text">Drop or click to upload</div>
+                  <div class="logo-upload-hint">Transparent PNG or SVG</div>
+                </div>
+                <div class="logo-preview-wrap" id="preview-full">
+                  <img id="img-preview-full" src="" alt="" />
+                  <div class="type-caption text-muted" id="name-full"></div>
+                  <button class="logo-remove-btn" data-variant="full" type="button">Remove</button>
+                </div>
+              </label>
+            </div>
+
+            <!-- 2. Symbol only -->
+            <div>
+              <div class="type-small text-foreground mb-2" style="font-weight:600;">Symbol Only</div>
+              <div class="type-caption text-muted mb-3">Mark alone — no wordmark. Used for favicon, nav bar, app icon, and small sizes (≤32px).</div>
+              <label class="logo-upload-zone" id="zone-symbol">
+                <input type="file" id="input-symbol" accept="image/png,image/svg+xml,image/jpeg,image/webp" />
+                <div class="upload-prompt" id="prompt-symbol">
+                  <div class="logo-upload-icon">🔷</div>
+                  <div class="logo-upload-text">Drop or click to upload</div>
+                  <div class="logo-upload-hint">Square format preferred</div>
+                </div>
+                <div class="logo-preview-wrap" id="preview-symbol">
+                  <img id="img-preview-symbol" src="" alt="" />
+                  <div class="type-caption text-muted" id="name-symbol"></div>
+                  <button class="logo-remove-btn" data-variant="symbol" type="button">Remove</button>
+                </div>
+              </label>
+            </div>
+
+            <!-- 3. White background -->
+            <div>
+              <div class="type-small text-foreground mb-2" style="font-weight:600;">White Background</div>
+              <div class="type-caption text-muted mb-3">Full lockup on white — for print, co-brand, light-mode, and email contexts.</div>
+              <label class="logo-upload-zone" id="zone-white">
+                <input type="file" id="input-white" accept="image/png,image/svg+xml,image/jpeg,image/webp" />
+                <div class="upload-prompt" id="prompt-white">
+                  <div class="logo-upload-icon">⬜</div>
+                  <div class="logo-upload-text">Drop or click to upload</div>
+                  <div class="logo-upload-hint">PNG with white fill</div>
+                </div>
+                <div class="logo-preview-wrap" id="preview-white">
+                  <img id="img-preview-white" src="" alt="" />
+                  <div class="type-caption text-muted" id="name-white"></div>
+                  <button class="logo-remove-btn" data-variant="white" type="button">Remove</button>
+                </div>
+              </label>
+            </div>
+
           </div>
 
-          <!-- Backgrounds -->
+          <!-- On Backgrounds -->
           <h3 class="type-h5 text-foreground mb-4">On Backgrounds</h3>
-          <div class="grid-3 mb-8">
+          <p class="type-caption text-muted mb-6">Dark swatches use the <strong style="color:hsl(var(--foreground))">Full Lockup</strong>. White swatch uses the <strong style="color:hsl(var(--foreground))">White Background</strong> version.</p>
+          <div class="grid-3 mb-10">
             <div>
               <div class="logo-bg-swatch mb-2" style="background:hsl(var(--background));">
-                <img class="logo-placed" src="" alt="" style="display:none;" />
-                <span class="placeholder-text logo-placeholder-text">Logo on Background<br><span style="font-size:0.75rem;opacity:0.6;">#0B0B0D</span></span>
+                <img class="slot-full" src="" alt="" style="display:none;max-height:48px;" />
+                <span class="slot-full-placeholder logo-placeholder-text">Full Lockup<br><span style="font-size:0.75rem;opacity:0.6;">#0B0B0D</span></span>
               </div>
-              <div class="type-caption text-muted">Dark background — primary use</div>
+              <div class="type-caption text-muted">Dark background — primary</div>
             </div>
             <div>
               <div class="logo-bg-swatch mb-2" style="background:hsl(var(--card));">
-                <img class="logo-placed" src="" alt="" style="display:none;" />
-                <span class="placeholder-text logo-placeholder-text">Logo on Card<br><span style="font-size:0.75rem;opacity:0.6;">#141417</span></span>
+                <img class="slot-full" src="" alt="" style="display:none;max-height:48px;" />
+                <span class="slot-full-placeholder logo-placeholder-text">Full Lockup<br><span style="font-size:0.75rem;opacity:0.6;">#141417</span></span>
               </div>
               <div class="type-caption text-muted">Card surface — nav & panels</div>
             </div>
             <div>
               <div class="logo-bg-swatch mb-2" style="background:hsl(var(--primary));">
-                <img class="logo-placed" src="" alt="" style="display:none;" />
-                <span class="placeholder-text logo-placeholder-text">Logo on Gold<br><span style="font-size:0.75rem;opacity:0.6;">#FFBF00</span></span>
+                <img class="slot-full" src="" alt="" style="display:none;max-height:48px;" />
+                <span class="slot-full-placeholder logo-placeholder-text">Full Lockup<br><span style="font-size:0.75rem;opacity:0.6;">#FFBF00</span></span>
               </div>
               <div class="type-caption text-muted">Gold — badges & CTAs</div>
             </div>
             <div>
               <div class="logo-bg-swatch mb-2" style="background:#FFFFFF;">
-                <img class="logo-placed" src="" alt="" style="display:none;" />
-                <span class="placeholder-text logo-placeholder-text" style="color:#888;">Logo on White<br><span style="font-size:0.75rem;opacity:0.6;">#FFFFFF</span></span>
+                <img class="slot-white" src="" alt="" style="display:none;max-height:48px;" />
+                <span class="slot-white-placeholder logo-placeholder-text" style="color:#999;">White BG version<br><span style="font-size:0.75rem;opacity:0.6;">#FFFFFF</span></span>
               </div>
               <div class="type-caption text-muted">White — print / light contexts</div>
             </div>
             <div>
               <div class="logo-bg-swatch mb-2" style="background:hsl(var(--secondary));">
-                <img class="logo-placed" src="" alt="" style="display:none;" />
-                <span class="placeholder-text logo-placeholder-text">Logo on Secondary<br><span style="font-size:0.75rem;opacity:0.6;">#222225</span></span>
+                <img class="slot-full" src="" alt="" style="display:none;max-height:48px;" />
+                <span class="slot-full-placeholder logo-placeholder-text">Full Lockup<br><span style="font-size:0.75rem;opacity:0.6;">#222225</span></span>
               </div>
               <div class="type-caption text-muted">Secondary — sidebar & muted UI</div>
             </div>
             <div>
-              <div class="logo-bg-swatch mb-2" style="background:hsl(var(--gold-soft)); border-color:hsl(var(--primary)/0.2);">
-                <img class="logo-placed" src="" alt="" style="display:none;" />
-                <span class="placeholder-text logo-placeholder-text">Logo on Gold Soft<br><span style="font-size:0.75rem;opacity:0.6;">rgba(255,191,0,0.12)</span></span>
+              <div class="logo-bg-swatch mb-2" style="background:hsl(var(--gold-soft));border-color:hsl(var(--primary)/0.2);">
+                <img class="slot-full" src="" alt="" style="display:none;max-height:48px;" />
+                <span class="slot-full-placeholder logo-placeholder-text">Full Lockup<br><span style="font-size:0.75rem;opacity:0.6;">gold-soft</span></span>
               </div>
               <div class="type-caption text-muted">Gold-soft — highlight panels</div>
             </div>
           </div>
 
-          <!-- Size scale -->
-          <h3 class="type-h5 text-foreground mb-4">Size Scale</h3>
-          <div class="card mb-8">
+          <!-- Size Scale -->
+          <h3 class="type-h5 text-foreground mb-2">Size Scale</h3>
+          <p class="type-caption text-muted mb-6"><strong style="color:hsl(var(--foreground))">Symbol Only</strong> at 16–32px · <strong style="color:hsl(var(--foreground))">Full Lockup</strong> at 48–120px</p>
+          <div class="card mb-10">
             <div class="logo-size-row">
               <div class="logo-size-demo">
-                <img class="logo-placed" src="" alt="" style="height:16px;display:none;" />
-                <span class="logo-placeholder-text type-caption text-muted" style="font-size:0.75rem;">16px</span>
-                <span class="type-caption text-muted mt-1">Favicon / micro</span>
+                <img class="slot-symbol" src="" alt="" style="height:16px;display:none;" />
+                <span class="slot-symbol-placeholder logo-placeholder-text" style="font-size:0.75rem;color:hsl(var(--muted-foreground));">symbol</span>
+                <span class="type-caption text-muted mt-1">16px<br>Favicon</span>
               </div>
               <div class="logo-size-demo">
-                <img class="logo-placed" src="" alt="" style="height:24px;display:none;" />
-                <span class="logo-placeholder-text type-caption text-muted" style="font-size:0.75rem;">24px</span>
-                <span class="type-caption text-muted mt-1">Nav bar</span>
+                <img class="slot-symbol" src="" alt="" style="height:24px;display:none;" />
+                <span class="slot-symbol-placeholder logo-placeholder-text" style="font-size:0.75rem;color:hsl(var(--muted-foreground));">symbol</span>
+                <span class="type-caption text-muted mt-1">24px<br>Nav bar</span>
               </div>
               <div class="logo-size-demo">
-                <img class="logo-placed" src="" alt="" style="height:32px;display:none;" />
-                <span class="logo-placeholder-text type-caption text-muted" style="font-size:0.75rem;">32px</span>
-                <span class="type-caption text-muted mt-1">Mobile nav</span>
+                <img class="slot-symbol" src="" alt="" style="height:32px;display:none;" />
+                <span class="slot-symbol-placeholder logo-placeholder-text" style="font-size:0.75rem;color:hsl(var(--muted-foreground));">symbol</span>
+                <span class="type-caption text-muted mt-1">32px<br>Mobile nav</span>
               </div>
               <div class="logo-size-demo">
-                <img class="logo-placed" src="" alt="" style="height:48px;display:none;" />
-                <span class="logo-placeholder-text type-caption text-muted" style="font-size:0.75rem;">48px</span>
-                <span class="type-caption text-muted mt-1">Hero / email header</span>
+                <img class="slot-full" src="" alt="" style="height:48px;display:none;" />
+                <span class="slot-full-placeholder logo-placeholder-text" style="font-size:0.75rem;color:hsl(var(--muted-foreground));">full lockup</span>
+                <span class="type-caption text-muted mt-1">48px<br>Email header</span>
               </div>
               <div class="logo-size-demo">
-                <img class="logo-placed" src="" alt="" style="height:72px;display:none;" />
-                <span class="logo-placeholder-text type-caption text-muted" style="font-size:0.75rem;">72px</span>
-                <span class="type-caption text-muted mt-1">Print / OG image</span>
+                <img class="slot-full" src="" alt="" style="height:72px;display:none;" />
+                <span class="slot-full-placeholder logo-placeholder-text" style="font-size:0.75rem;color:hsl(var(--muted-foreground));">full lockup</span>
+                <span class="type-caption text-muted mt-1">72px<br>Print / OG</span>
               </div>
               <div class="logo-size-demo">
-                <img class="logo-placed" src="" alt="" style="height:120px;display:none;" />
-                <span class="logo-placeholder-text type-caption text-muted" style="font-size:0.75rem;">120px</span>
-                <span class="type-caption text-muted mt-1">Landing hero</span>
+                <img class="slot-full" src="" alt="" style="height:120px;display:none;" />
+                <span class="slot-full-placeholder logo-placeholder-text" style="font-size:0.75rem;color:hsl(var(--muted-foreground));">full lockup</span>
+                <span class="type-caption text-muted mt-1">120px<br>Hero</span>
               </div>
             </div>
           </div>
 
           <!-- Clear space -->
           <h3 class="type-h5 text-foreground mb-4">Minimum Clear Space</h3>
-          <div class="card mb-8" style="text-align:center;">
-            <div style="display:flex;align-items:center;justify-content:center;min-height:140px;" id="clearspace-wrap">
+          <div class="card mb-10" style="text-align:center;">
+            <div style="display:flex;align-items:center;justify-content:center;min-height:140px;">
               <div class="logo-clearance-demo" id="clearspace-demo" style="display:none;">
-                <img id="clearspace-img" src="" alt="Logo clear space" style="max-height:60px;max-width:200px;object-fit:contain;display:block;" />
+                <img id="clearspace-img" src="" alt="" style="max-height:60px;max-width:240px;object-fit:contain;display:block;" />
                 <div class="logo-clearance-box"></div>
                 <div class="logo-clearance-label">1× logo height clear space on all sides</div>
               </div>
-              <p class="type-small text-muted" id="clearspace-placeholder">Upload a logo to see the minimum clear space demonstration.</p>
+              <p class="type-small text-muted" id="clearspace-placeholder">Upload the Full Lockup to see the minimum clear space demonstration.</p>
             </div>
           </div>
 
@@ -1465,19 +1512,19 @@
           <div class="rule-grid">
             <div class="rule-do">
               <div class="rule-label">✓ Do</div>
-              <p class="rule-text">Use the logo on dark backgrounds (#0B0B0D or #141417) as the primary application. The gold accent in the mark reads best against near-black.</p>
+              <p class="rule-text">Use the Full Lockup on all dark backgrounds as the primary application. Switch to Symbol Only below 32px where the wordmark becomes illegible.</p>
             </div>
             <div class="rule-dont">
               <div class="rule-label">✕ Don't</div>
-              <p class="rule-text">Don't place the logo on mid-tone gray backgrounds where contrast is insufficient. Test on any new background with a contrast checker.</p>
+              <p class="rule-text">Don't use the dark/transparent logo on white or light backgrounds — use the White Background version. Mid-tone grays reduce contrast below acceptable levels.</p>
             </div>
             <div class="rule-do">
               <div class="rule-label">✓ Do</div>
-              <p class="rule-text">Maintain a minimum clear space equal to the logo's height on all four sides. Never crowd the logo with other elements.</p>
+              <p class="rule-text">Maintain a minimum clear space equal to the logo's height on all four sides. Never crowd the logo with other elements or text.</p>
             </div>
             <div class="rule-dont">
               <div class="rule-label">✕ Don't</div>
-              <p class="rule-text">Don't recolor, stretch, rotate, add drop shadows, or apply effects to the logo. Use only the approved lockups at 100% opacity.</p>
+              <p class="rule-text">Don't recolor, stretch, rotate, add drop shadows, or apply effects to any logo variant. Use only approved files at 100% opacity.</p>
             </div>
           </div>
         </section>
@@ -2431,96 +2478,96 @@
   </footer>
 
   <script>
-    // ── Logo upload & populate ──────────────────────────────────
-    const logoInput    = document.getElementById('logo-input');
-    const uploadZone   = document.getElementById('upload-zone');
-    const uploadPrompt = document.getElementById('upload-prompt');
-    const uploadPreview = document.getElementById('upload-preview');
-    const previewImg   = document.getElementById('preview-img');
-    const previewName  = document.getElementById('preview-filename');
-    const removeBtn    = document.getElementById('remove-logo');
+    // ── Logo upload & populate (three variants) ─────────────────
+    const variants = {
+      full:   { slotClass: 'slot-full',   placeholderClass: 'slot-full-placeholder' },
+      symbol: { slotClass: 'slot-symbol', placeholderClass: 'slot-symbol-placeholder' },
+      white:  { slotClass: 'slot-white',  placeholderClass: 'slot-white-placeholder' },
+    };
 
-    function applyLogo(src, filename) {
+    function applyVariant(key, src, filename) {
       // Upload zone preview
-      previewImg.src = src;
-      previewName.textContent = filename || '';
-      uploadPrompt.style.display = 'none';
-      uploadPreview.classList.add('visible');
+      document.getElementById(`prompt-${key}`).style.display = 'none';
+      const wrap = document.getElementById(`preview-${key}`);
+      wrap.classList.add('visible');
+      document.getElementById(`img-preview-${key}`).src = src;
+      document.getElementById(`name-${key}`).textContent = filename || '';
 
-      // Background swatches
-      document.querySelectorAll('.logo-bg-swatch').forEach(swatch => {
-        const img = swatch.querySelector('.logo-placed');
-        const txt = swatch.querySelector('.logo-placeholder-text');
+      // Populate all image slots for this variant
+      const { slotClass, placeholderClass } = variants[key];
+      document.querySelectorAll(`.${slotClass}`).forEach(img => {
         img.src = src;
         img.style.display = 'block';
-        if (txt) txt.style.display = 'none';
+      });
+      document.querySelectorAll(`.${placeholderClass}`).forEach(el => {
+        el.style.display = 'none';
       });
 
-      // Size scale
-      document.querySelectorAll('.logo-size-demo').forEach(demo => {
-        const img = demo.querySelector('.logo-placed');
-        const txt = demo.querySelector('.logo-placeholder-text');
-        img.style.display = 'block';
-        img.src = src;
-        if (txt) txt.style.display = 'none';
-      });
-
-      // Clear space
-      const clearDemo = document.getElementById('clearspace-demo');
-      const clearPlaceholder = document.getElementById('clearspace-placeholder');
-      const clearImg = document.getElementById('clearspace-img');
-      clearImg.src = src;
-      clearDemo.style.display = 'inline-block';
-      clearPlaceholder.style.display = 'none';
+      // Clear space — driven by full lockup
+      if (key === 'full') {
+        document.getElementById('clearspace-img').src = src;
+        document.getElementById('clearspace-demo').style.display = 'inline-block';
+        document.getElementById('clearspace-placeholder').style.display = 'none';
+      }
     }
 
-    function removeLogo() {
-      previewImg.src = '';
-      previewName.textContent = '';
-      uploadPrompt.style.display = '';
-      uploadPreview.classList.remove('visible');
-      logoInput.value = '';
+    function removeVariant(key) {
+      document.getElementById(`prompt-${key}`).style.display = '';
+      const wrap = document.getElementById(`preview-${key}`);
+      wrap.classList.remove('visible');
+      document.getElementById(`img-preview-${key}`).src = '';
+      document.getElementById(`name-${key}`).textContent = '';
+      document.getElementById(`input-${key}`).value = '';
 
-      document.querySelectorAll('.logo-placed').forEach(img => {
+      const { slotClass, placeholderClass } = variants[key];
+      document.querySelectorAll(`.${slotClass}`).forEach(img => {
         img.src = '';
         img.style.display = 'none';
       });
-      document.querySelectorAll('.logo-placeholder-text').forEach(txt => {
-        txt.style.display = '';
+      document.querySelectorAll(`.${placeholderClass}`).forEach(el => {
+        el.style.display = '';
       });
 
-      document.getElementById('clearspace-demo').style.display = 'none';
-      document.getElementById('clearspace-placeholder').style.display = '';
+      if (key === 'full') {
+        document.getElementById('clearspace-demo').style.display = 'none';
+        document.getElementById('clearspace-placeholder').style.display = '';
+      }
     }
 
-    logoInput.addEventListener('change', e => {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = ev => applyLogo(ev.target.result, file.name);
-      reader.readAsDataURL(file);
-    });
+    function wireZone(key) {
+      const input = document.getElementById(`input-${key}`);
+      const zone  = document.getElementById(`zone-${key}`);
 
-    removeBtn.addEventListener('click', e => {
-      e.preventDefault();
-      e.stopPropagation();
-      removeLogo();
-    });
+      input.addEventListener('change', e => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = ev => applyVariant(key, ev.target.result, file.name);
+        reader.readAsDataURL(file);
+      });
 
-    // Drag-and-drop
-    uploadZone.addEventListener('dragover', e => {
-      e.preventDefault();
-      uploadZone.classList.add('dragover');
-    });
-    uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
-    uploadZone.addEventListener('drop', e => {
-      e.preventDefault();
-      uploadZone.classList.remove('dragover');
-      const file = e.dataTransfer.files[0];
-      if (!file || !file.type.startsWith('image/')) return;
-      const reader = new FileReader();
-      reader.onload = ev => applyLogo(ev.target.result, file.name);
-      reader.readAsDataURL(file);
+      zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dragover'); });
+      zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
+      zone.addEventListener('drop', e => {
+        e.preventDefault();
+        zone.classList.remove('dragover');
+        const file = e.dataTransfer.files[0];
+        if (!file || !file.type.startsWith('image/')) return;
+        const reader = new FileReader();
+        reader.onload = ev => applyVariant(key, ev.target.result, file.name);
+        reader.readAsDataURL(file);
+      });
+    }
+
+    ['full', 'symbol', 'white'].forEach(wireZone);
+
+    // Remove buttons (delegated)
+    document.querySelectorAll('.logo-remove-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        e.stopPropagation();
+        removeVariant(btn.dataset.variant);
+      });
     });
 
     // Copy tokens to clipboard
